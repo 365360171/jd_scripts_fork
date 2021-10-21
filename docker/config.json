@@ -1,0 +1,624 @@
+[{
+  "id": "jd_bean_change",
+  "isConcurrent": false,
+  "cron": "0 10 * * * ",
+  "describe": "仅作查询用途，推荐配置自动推送",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_bean_change.js",
+  "name": "@京东资产变动通知"
+}, {
+  "id": "jd_bean_home",
+  "isConcurrent": false,
+  "cron": "23 1,12,22 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_bean_home.js",
+  "name": "@领京豆额外奖励"
+}, {
+  "id": "jd_bean_sign",
+  "isConcurrent": false,
+  "cron": "0 0,18 * * * ",
+  "describe": "1.会下载JD_DailyBonus.js进行签到。2.如果当天已经签到过了，再次执行可能会卡住。3.0点执行可能会卡住，建议多等半个小时再签到",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_bean_sign.js",
+  "name": "@签到"
+}, {
+  "id": "jd_beauty",
+  "isConcurrent": false,
+  "cron": "1 8,13,20 * * * ",
+  "describe": "容易活动火爆",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_beauty.js",
+  "name": "@美丽研究院"
+}, {
+  "id": "jd_big_winner",
+  "isConcurrent": false,
+  "cron": "20 * * * * ",
+  "describe": "每日上限4次",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_big_winner.js",
+  "name": "@省钱大赢家之翻翻乐"
+}, {
+  "id": "jd_blueCoin",
+  "isConcurrent": false,
+  "cron": "59 23 * * * ",
+  "describe": "按配置兑换京豆",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_blueCoin.js",
+  "name": "@东东超市兑换奖品"
+}, {
+  "id": "jd_bookshop",
+  "isConcurrent": false,
+  "cron": "7 8,12,18 * * * ",
+  "describe": "每天需要手动进入游戏页面才可以执行成功，建议忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_bookshop.js",
+  "name": "@口袋书店"
+}, {
+  "id": "jd_car",
+  "isConcurrent": false,
+  "cron": "0 0 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_car.js",
+  "name": "@京东汽车"
+}, {
+  "id": "jd_carnivalcity",
+  "isConcurrent": false,
+  "cron": "0 0-18/6 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_carnivalcity.js",
+  "name": "@京东手机狂欢城活动"
+}, {
+  "id": "jd_car_exchange",
+  "isConcurrent": false,
+  "cron": "0 0 * * * ",
+  "describe": "执行意义不大，可手动兑换，建议平时忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_car_exchange.js",
+  "name": "@京东汽车兑换"
+}, {
+  "id": "jd_cash",
+  "isConcurrent": false,
+  "cron": "27 7,15 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_cash.js",
+  "name": "@签到领现金"
+}, {
+  "id": "jd_cash_exchange",
+  "isConcurrent": false,
+  "cron": "0 0 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_cash_exchange.js",
+  "name": "@签到领现金兑换"
+}, {
+  "id": "jd_cfd",
+  "isConcurrent": false,
+  "cron": "18 0-23/2 * * *  ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_cfd.js",
+  "name": "@京喜财富岛"
+}, {
+  "id": "jd_club_lottery",
+  "isConcurrent": false,
+  "cron": "0 0 * * * ",
+  "describe": "收益较低，看活动多少",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_club_lottery.js",
+  "name": "@摇京豆"
+}, {
+  "id": "jd_crazy_joy",
+  "isConcurrent": false,
+  "cron": "10 7 * * * ",
+  "describe": "容易活动火爆",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_crazy_joy.js",
+  "name": "@crazyJoy任务"
+}, {
+  "id": "jd_crazy_joy_coin",
+  "isConcurrent": false,
+  "cron": "5 5 */2 * *  ",
+  "describe": "脚本不会自动停止，单独执行任务计划，半小时自动停止",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_crazy_joy_coin.js",
+  "name": "@crazyJoy挂机"
+}, {
+  "id": "jd_daily_egg",
+  "isConcurrent": false,
+  "cron": "18 * * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_daily_egg.js",
+  "name": "@天天提鹅"
+}, {
+  "id": "jd_daily_lottery",
+  "isConcurrent": false,
+  "cron": "13 1,22,23 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_daily_lottery.js",
+  "name": "@小鸽有礼-每日抽奖"
+}, {
+  "id": "jd_DrawEntrance",
+  "isConcurrent": false,
+  "cron": "15 6 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_DrawEntrance.js",
+  "name": "@天天优惠大乐透"
+}, {
+  "id": "jd_dreamFactory",
+  "isConcurrent": false,
+  "cron": "20 * * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_dreamFactory.js",
+  "name": "@京喜工厂"
+}, {
+  "id": "jd_EsportsManager",
+  "isConcurrent": false,
+  "cron": "0 0-23/2 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_EsportsManager.js",
+  "name": "@东东电竞经理"
+}, {
+  "id": "jd_europeancup",
+  "isConcurrent": false,
+  "cron": "55 59 9  * * * ",
+  "describe": "活动已结束",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_europeancup.js",
+  "name": "@欧洲狂欢杯"
+}, {
+  "id": "jd_fruit",
+  "isConcurrent": false,
+  "cron": "5 6-18/6 * * * ",
+  "describe": "可微信推送消息，定时浇水有任务奖励",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_fruit.js",
+  "name": "@东东农场"
+}, {
+  "id": "jd_get_share_code",
+  "isConcurrent": false,
+  "cron": "47 7 * * * ",
+  "describe": "需要查看互助码的时候执行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_get_share_code.js",
+  "name": "@获取互助码"
+}, {
+  "id": "jd_gold_creator",
+  "isConcurrent": false,
+  "cron": "40 9,21 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_gold_creator.js",
+  "name": "@金榜创造营"
+}, {
+  "id": "jd_health",
+  "isConcurrent": false,
+  "cron": "13 1,7,22 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_health.js",
+  "name": "@东东健康社区"
+}, {
+  "id": "jd_health_collect",
+  "isConcurrent": false,
+  "cron": "5-45/20 * * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_health_collect.js",
+  "name": "@东东健康社区收集能量"
+}, {
+  "id": "jd_jdfactory",
+  "isConcurrent": false,
+  "cron": "36 * * * * ",
+  "describe": "记得在jdFactoryShareCodes.js维护互助码",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jdfactory.js",
+  "name": "@东东工厂"
+}, {
+  "id": "jd_jdzz",
+  "isConcurrent": false,
+  "cron": "10 11 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jdzz.js",
+  "name": "@京东赚赚"
+}, {
+  "id": "jd_jin_tie",
+  "isConcurrent": false,
+  "cron": "5 0 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jin_tie.js",
+  "name": "@领金贴"
+}, {
+  "id": "jd_joy",
+  "isConcurrent": false,
+  "cron": "15 */2 * * * ",
+  "describe": "需要npm install png-js，目前改用群文件的脚本，可行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_joy.js",
+  "name": "@宠汪汪"
+}, {
+  "id": "jd_joy_feedPets",
+  "isConcurrent": false,
+  "cron": "15 */1 * * * ",
+  "describe": "喂食达到7次有额外积分奖励,3小时1次",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_joy_feedPets.js",
+  "name": "@宠汪汪-喂食"
+}, {
+  "id": "jd_joy_steal",
+  "isConcurrent": false,
+  "cron": "10 0-21/3 * * * ",
+  "describe": "无好友，忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_joy_steal.js",
+  "name": "@宠汪汪偷好友积分与狗粮"
+}, {
+  "id": "jd_joy_park",
+  "isConcurrent": false,
+  "cron": "30 2,20 * * * ",
+  "describe": "运行时间过长，单独执行，偶尔卡住无法执行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_joy_park.js",
+  "name": "@汪汪乐园"
+}, {
+  "id": "jd_joy_reward",
+  "isConcurrent": false,
+  "cron": "0 0,8,16 * * *  ",
+  "describe": "自动兑换京豆，为了避免京豆过期，可手动执行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_joy_reward.js",
+  "name": "@宠汪汪积分兑换奖品"
+}, {
+  "id": "jd_joy_run",
+  "isConcurrent": false,
+  "cron": "10 10-20/2 * * * ",
+  "describe": "暂无token，忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_joy_run.js",
+  "name": "@宠汪汪赛跑"
+}, {
+  "id": "jd_jump",
+  "isConcurrent": false,
+  "cron": "15 0,12,22 * * * ",
+  "describe": "活动是循环更新的，可以当日常任务",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jump.js",
+  "name": "@跳跳乐瓜分京豆"
+}, {
+  "id": "jd_jxg",
+  "isConcurrent": false,
+  "cron": "13 1,22,23 * * * ",
+  "describe": "执行过程会卡住，暂不运行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jxg.js",
+  "name": "@京小鸽吾悦寄"
+}, {
+  "id": "jd_jxmc",
+  "isConcurrent": false,
+  "cron": "20 0-23/3 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jxmc.js",
+  "name": "@京喜牧场"
+}, {
+  "id": "jd_jxnc",
+  "isConcurrent": false,
+  "cron": "0 9,12,18 * * * ",
+  "describe": "没有种子，暂时忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jxnc.js",
+  "name": "@京喜农场"
+}, {
+  "id": "jd_jx_sign",
+  "isConcurrent": false,
+  "cron": "5 0 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jx_sign.js",
+  "name": "@京喜签到"
+}, {
+  "id": "jd_kd",
+  "isConcurrent": false,
+  "cron": "23 1 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_kd.js",
+  "name": "@京东快递签到"
+}, {
+  "id": "jd_live",
+  "isConcurrent": false,
+  "cron": "10-20/5 12 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_live.js",
+  "name": "@京东直播"
+}, {
+  "id": "jd_live_redrain",
+  "isConcurrent": false,
+  "cron": "0,30,31 0-23/1 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_live_redrain.js",
+  "name": "@超级直播间红包雨"
+}, {
+  "id": "jd_lotteryMachine",
+  "isConcurrent": false,
+  "cron": "22 0,12,18 * * *  ",
+  "describe": "活动已结束",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_lotteryMachine.js",
+  "name": "@京东抽奖机&内部互助"
+}, {
+  "id": "jd_lsj",
+  "isConcurrent": false,
+  "cron": "0 11 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_lsj.js",
+  "name": "@京东零食街"
+}, {
+  "id": "jd_market_lottery",
+  "isConcurrent": false,
+  "cron": "10 10,23 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_market_lottery.js",
+  "name": "@幸运大转盘"
+}, {
+  "id": "jd_mohe",
+  "isConcurrent": false,
+  "cron": "0 0,1-23/3 * * * ",
+  "describe": "运行时间过长，单独执行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_mohe.js",
+  "name": "@5G超级盲盒"
+}, {
+  "id": "jd_moneyTree",
+  "isConcurrent": false,
+  "cron": "0 */2 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_moneyTree.js",
+  "name": "@京东摇钱树"
+}, {
+  "id": "jd_ms",
+  "isConcurrent": false,
+  "cron": "10 7 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_ms.js",
+  "name": "@京东秒秒币"
+}, {
+  "id": "jd_necklace",
+  "isConcurrent": false,
+  "cron": "20 0,20 * * * ",
+  "describe": "运行时间过长，单独执行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_necklace.js",
+  "name": "@点点券二代目"
+}, {
+  "id": "jd_nzmh",
+  "isConcurrent": false,
+  "cron": "35 1,23 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_nzmh.js",
+  "name": "@女装盲盒抽京豆"
+}, {
+  "id": "jd_pet",
+  "isConcurrent": false,
+  "cron": "5 6-18/6 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_pet.js",
+  "name": "@东东萌宠"
+}, {
+  "id": "jd_pigPet",
+  "isConcurrent": false,
+  "cron": "12 * * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_pigPet.js",
+  "name": "@金融养猪"
+}, {
+  "id": "jd_pk",
+  "isConcurrent": false,
+  "cron": "15 0,6,13,19,21 * 6 * ",
+  "describe": "无收获，可忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_pk.js",
+  "name": "@京享值PK"
+}, {
+  "id": "jd_plantBean",
+  "isConcurrent": false,
+  "cron": "0  */6 * * * ",
+  "describe": "需要npm install ws",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_plantBean.js",
+  "name": "@种豆得豆"
+}, {
+  "id": "jd_priceProtect",
+  "isConcurrent": false,
+  "cron": "10 0 */3 * *  ",
+  "describe": "需要的时候手动执行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_priceProtect.js",
+  "name": "@京东价格保护"
+}, {
+  "id": "jd_qqxing",
+  "isConcurrent": false,
+  "cron": "30 7 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_qqxing.js",
+  "name": "@QQ星系牧场"
+}, {
+  "id": "jd_rankingList",
+  "isConcurrent": false,
+  "cron": "11 9 * * * ",
+  "describe": "用于签到，已和签到合并，可忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_rankingList.js",
+  "name": "@京东排行榜"
+}, {
+  "id": "jd_redPacket",
+  "isConcurrent": false,
+  "cron": "12 1,21,23 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_redPacket.js",
+  "name": "@京东全民开红包"
+}, {
+  "id": "jd_senbeans",
+  "isConcurrent": false,
+  "cron": "45 4 * * * ",
+  "describe": "号内互助，至少需要6个号，号少的可忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_senbeans.js",
+  "name": "@送豆得豆"
+}, {
+  "id": "jd_sgmh",
+  "isConcurrent": false,
+  "cron": "27 8 * * * ",
+  "describe": "无收获，可忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_sgmh.js",
+  "name": "@闪购盲盒"
+}, {
+  "id": "jd_shop",
+  "isConcurrent": false,
+  "cron": "10 0 * * * ",
+  "describe": "无收获，可忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_shop.js",
+  "name": "@进店领豆"
+}, {
+  "id": "jd_sign_graphics",
+  "isConcurrent": false,
+  "cron": "14 10 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_sign_graphics.js",
+  "name": "@京东图形验证签到"
+}, {
+  "id": "jd_small_home",
+  "isConcurrent": false,
+  "cron": "16 6,23 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_small_home.js",
+  "name": "@东东小窝"
+}, {
+  "id": "jd_speed",
+  "isConcurrent": false,
+  "cron": "8 */3 * * * ",
+  "describe": "无收益，可忽略",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_speed.js",
+  "name": "@天天加速"
+}, {
+  "id": "jd_speed_redpocke",
+  "isConcurrent": false,
+  "cron": "30 9 * * * ",
+  "describe": "也有签到功能，放到签到脚本",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_speed_redpocke.js",
+  "name": "@京东极速版红包"
+}, {
+  "id": "jd_speed_sign",
+  "isConcurrent": false,
+  "cron": "48 0,12,18 * * *  ",
+  "describe": "运行时间过长，单独执行",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_speed_sign.js",
+  "name": "@京东极速版签到+赚现金任务"
+}, {
+  "id": "jd_superMarket",
+  "isConcurrent": false,
+  "cron": "31 0,1-23/2 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_superMarket.js",
+  "name": "@东东超市"
+}, {
+  "id": "jd_syj",
+  "isConcurrent": false,
+  "cron": "36 8,18 * * * ",
+  "describe": "经常提示活动火爆",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_syj.js",
+  "name": "@赚京豆"
+}, {
+  "id": "jd_try",
+  "isConcurrent": false,
+  "cron": "10 0 * * *  ",
+  "describe": "如不需要试用，可忽略，推荐配置自动推送",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_try.js",
+  "name": "@京东试用"
+}, {
+  "id": "jd_unsubscribe",
+  "isConcurrent": false,
+  "cron": "55 23 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_unsubscribe.js",
+  "name": "@取关京东店铺和商品"
+}, {
+  "id": "jd_wxFans",
+  "isConcurrent": false,
+  "cron": "34 6,18 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_wxFans.js",
+  "name": "@粉丝互动"
+}, {
+  "id": "jd_ylyn",
+  "isConcurrent": false,
+  "cron": "0 12 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_ylyn.js",
+  "name": "@柠檬-伊利养牛记"
+}, {
+  "id": "jd_twz_star",
+  "isConcurrent": false,
+  "cron": "20 0 * * * ",
+  "describe": "活动已结束",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_twz_star.js",
+  "name": "@特物Z行动-星小店"
+}, {
+  "id": "jd_twlove",
+  "isConcurrent": false,
+  "cron": "20 0 * * * ",
+  "describe": "活动已结束",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_twlove.js",
+  "name": "@特物Z简爱"
+}, {
+  "id": "jd_mb",
+  "isConcurrent": false,
+  "cron": "6 9,12 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_mb.js",
+  "name": "@全民摸冰"
+}, {
+  "id": "jd_MMdou",
+  "isConcurrent": false,
+  "cron": "21 9 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_MMdou.js",
+  "name": "@升级赚京豆"
+}, {
+  "id": "jd_productZ4Brand",
+  "isConcurrent": false,
+  "cron": "23 0,9 24-27 7 * ",
+  "describe": "活动详情获取失败 ",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_productZ4Brand.js",
+  "name": "@特物Z"
+}, {
+  "id": "jd_ttzjd",
+  "isConcurrent": false,
+  "cron": "20 8 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_ttzjd.js",
+  "name": "@天天赚京豆"
+}, {
+  "id": "jd_ryhx",
+  "isConcurrent": false,
+  "cron": "20 8 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_ryhx.js",
+  "name": "@荣耀换新"
+}, {
+  "id": "jd_wish",
+  "isConcurrent": false,
+  "cron": "0 8,12 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_wish.js",
+  "name": "@京东众筹许愿池"
+}, {
+  "id": "jd_ldhwj",
+  "isConcurrent": false,
+  "cron": "35 8 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_ldhwj.js",
+  "name": "@来电好物季"
+}, {
+  "id": "jd_decompression",
+  "isConcurrent": false,
+  "cron": "5 6,8 * * * ",
+  "describe": "限时活动",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_decompression.js",
+  "name": "@热血心跳,狂解压"
+}, {
+  "id": "jd_xmGame",
+  "isConcurrent": false,
+  "cron": "31 8,22 13-31 8 * ",
+  "describe": "限时活动",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_xmGame.js",
+  "name": "@小米-星空大冒险"
+}, {
+  "id": "jd_xiaolong",
+  "isConcurrent": false,
+  "cron": "18 9,19 13-25 8 * ",
+  "describe": "限时活动",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_xiaolong.js",
+  "name": "@骁龙品牌日"
+}, {
+  "id": "jd_ccSign",
+  "isConcurrent": false,
+  "cron": "15 0 * * * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_ccSign.js",
+  "name": "@领券中心签到"
+}, {
+  "id": "jd_king",
+  "isConcurrent": false,
+  "cron": "23 8,9 22-31,1-5 8,9 * ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_king.js",
+  "name": "@王者荣耀投票"
+}, {
+  "id": "jd_ShopSign",
+  "isConcurrent": false,
+  "cron": "0 1,17 * * *   ",
+  "describe": "",
+  "url": "https://ghproxy.com/https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_ShopSign.js",
+  "name": "@店铺签到"
+}]
