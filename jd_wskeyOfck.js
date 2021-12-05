@@ -11,8 +11,9 @@ const $ = new Env('wskey获取ck');
 const jdWskeyNode = $.isNode() ? require('./jdWskey.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
 let optionsA ='';
+//'wskey=2222; pin=111;',//账号1ck,例:pin=XXX;wskey=XXX;如有更多,依次类推
 let wskeysArr = [
-''
+    'wskey=2222; pin=111;'
 ];
 if ($.isNode()) {
     Object.keys(jdWskeyNode).forEach((item) => {
@@ -41,10 +42,11 @@ async function wskey_to_pt_key(){
     await getToken();
     if ($.tokenKey){
        await appjmp();
+        // await getJDCookie($.tokenKey);
     }
 }
 
-function getToken() {
+async function getToken() {
     let config = {
         url: 'https://api.m.jd.com/client.action?functionId=genToken&clientVersion=10.1.2&build=89743&client=android&d_brand=&d_model=&osVersion=&screen=&partner=&oaid=&openudid=a27b83d3d1dba1cc&eid=&sdkVersion=30&lang=zh_CN&uuid=a27b83d3d1dba1cc&aid=a27b83d3d1dba1cc&area=19_1601_36953_50397&networkType=wifi&wifiBssid=&uts=&uemps=0-2&harmonyOs=0&st=1630413012009&sign=ca712dabc123eadd584ce93f63e00207&sv=121',
         body: 'body=%7B%22to%22%3A%22https%253a%252f%252fplogin.m.jd.com%252fjd-mlogin%252fstatic%252fhtml%252fappjmp_blank.html%22%7D&',
@@ -80,7 +82,7 @@ function getToken() {
     })
 }
 
-function appjmp() {
+async function appjmp() {
         const options = {
 			"url":`https://un.m.jd.com/cgi-bin/app/appjmp?tokenKey=${$.tokenKey}&to=https%3A%2F%2Fplogin.m.jd.com%2Fcgi-bin%2Fm%2Fthirdapp_auth_page%3Ftoken%3DAAEAIEijIw6wxF2s3bNKF0bmGsI8xfw6hkQT6Ui2QVP7z1Xg%26client_type%3Dandroid%26appid%3D879%26appup_type%3D1'.format(${$.tokenKey})`,	
 			"followRedirect":false, 	

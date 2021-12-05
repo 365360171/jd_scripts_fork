@@ -3,6 +3,7 @@
 @author LingFeng0918
  */
 //此处填写京东账号wskey。
+//账号1ck,例:pin=XXX;wskey=XXX;如有更多,依次类推
 let WskeyJDs = [
 ''
 ]

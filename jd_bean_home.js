@@ -23,7 +23,7 @@ const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 let jdNotify = true;//是否关闭通知，false打开通知推送，true关闭通知推送
 const helpAuthor = true; // 是否帮助作者助力，false打开通知推送，true关闭通知推送
-const qjd = false; // 抢京豆开关，默认开
+const qjd = true; // 抢京豆开关，默认开
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', uuid = '', message;
 if ($.isNode()) {
@@ -39,9 +39,7 @@ const JD_API_HOST = 'https://api.m.jd.com/';
 !(async () => {
   $.newShareCodes = []
   $.authorCode = [
-      '346EF4BD0A25F405067AC1C3991110BA',
-      'F4AEC40E3AA2DA5266C483C883F5F1CB',
-      '9C178626C4351B0C716F5A643D1E382BAD1DAAB9A3E3F6CBAFDE81EEB7393333'
+    {"shareCode": "346EF4BD0A25F405067AC1C3991110BA", "groupCode": "904903474800779264"}, {"shareCode": "F4AEC40E3AA2DA5266C483C883F5F1CB", "groupCode": "904541839095914496"}, {"shareCode": "9C178626C4351B0C716F5A643D1E382BAD1DAAB9A3E3F6CBAFDE81EEB7393333", "groupCode": "904542522412130304"}, {"shareCode": "D6ACE4F72D41FD6F14194566BFC5E039", "groupCode": "904543206216458240"}, {"shareCode": "4AAED53A1E1B3926909BA4BE0E1A0C38AD1DAAB9A3E3F6CBAFDE81EEB7393333", "groupCode": "904543889482735616"}, {"shareCode": "D8DC88C77CD2D9FB3F15A6D8CB5A761AAD1DAAB9A3E3F6CBAFDE81EEB7393333", "groupCode": "904544574385709056"}, {"shareCode": "2725FBBF6C6A725E72DE239ED2A1A72B", "groupCode": "904545260143140864"}, {"shareCode": "83BCF84C93D8E275B3EC041AB22DC87C", "groupCode": "904545944849768448"}, {"shareCode": "C489B75A189137284F5644BC77BDFB05AD1DAAB9A3E3F6CBAFDE81EEB7393333", "groupCode": "904546630434578432"}, {"shareCode": "0B26809632A7EE40A034794D6C36152CAD1DAAB9A3E3F6CBAFDE81EEB7393333", "groupCode": "904547316253745152"}
   ]
   if (!cookiesArr[0]) {
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
@@ -69,47 +67,45 @@ const JD_API_HOST = 'https://api.m.jd.com/';
       await jdBeanHome();
     }
   }
-  if(qjd) {
-    for (let i = 0; i < cookiesArr.length; i++) {
-      $.index = i + 1;
-      if (cookiesArr[i]) {
-        cookie = cookiesArr[i];
-        $.canHelp = true;
-        $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
-        if ($.newShareCodes.length > 1) {
-          console.log(`\n【抢京豆】 ${$.UserName} 去助力排名第一的cookie`);
-          // let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
-          // await help(code[0], code[1])
-          let code = $.newShareCodes[0];
-          if (code[2] && code[2] === $.UserName) {
-            //不助力自己
-          } else {
-            await help(code[0], code[1]);
-          }
+  for (let i = 0; i < cookiesArr.length; i++) {
+    $.index = i + 1;
+    if (cookiesArr[i]) {
+      cookie = cookiesArr[i];
+      $.canHelp = true;
+      $.UserName = decodeURIComponent(cookie.match(/pt_pin=([^; ]+)(?=;?)/) && cookie.match(/pt_pin=([^; ]+)(?=;?)/)[1])
+      if ($.newShareCodes.length > 1) {
+        console.log(`\n【抢京豆】 ${$.UserName} 去助力排名第一的cookie`);
+        // let code = $.newShareCodes[(i + 1) % $.newShareCodes.length]
+        // await help(code[0], code[1])
+        let code = $.newShareCodes[0];
+        if(code[2] && code[2] ===  $.UserName){
+          //不助力自己
+        } else {
+          await help(code[0], code[1]);
         }
-        if (helpAuthor && $.authorCode && $.canHelp) {
-          console.log(`\n【抢京豆】${$.UserName} 去帮助作者`)
-          for (let code of $.authorCode) {
-            const helpRes = await help(code.shareCode, code.groupCode);
-            if (helpRes && helpRes['code'] === '0') {
-              if (helpRes && helpRes.data && helpRes.data.respCode === 'SG209') {
-                console.log(`${helpRes.data.helpToast}\n`);
-                break;
-              }
-            } else {
-              console.log(`助力异常:${JSON.stringify(helpRes)}\n`);
+      }
+      if (helpAuthor && $.authorCode && $.canHelp) {
+        console.log(`\n【抢京豆】${$.UserName} 去帮助作者`)
+        for (let code of $.authorCode) {
+          const helpRes = await help(code.shareCode, code.groupCode);
+          if (helpRes && helpRes['code'] === '0') {
+            if (helpRes && helpRes.data && helpRes.data.respCode === 'SG209') {
+              console.log(`${helpRes.data.helpToast}\n`);
+              break;
             }
+          } else {
+            console.log(`助力异常:${JSON.stringify(helpRes)}\n`);
           }
         }
-        for (let j = 1; j < $.newShareCodes.length && $.canHelp; j++) {
-          let code = $.newShareCodes[j];
-          if (code[2] && code[2] === $.UserName) {
-            //不助力自己
-          } else {
-            console.log(`【抢京豆】${$.UserName} 去助力账号 ${j + 1}`);
-            await help(code[0], code[1]);
-            await $.wait(2000);
-          }
+      }
+      for (let j = 1; j < $.newShareCodes.length && $.canHelp; j++) {
+        let code = $.newShareCodes[j];
+        if(code[2] && code[2] ===  $.UserName){
+          //不助力自己
+        } else {
+          console.log(`【抢京豆】${$.UserName} 去助力账号 ${j + 1}`);
+          await help(code[0], code[1]);
+          await $.wait(2000);
         }
       }
     }
@@ -125,12 +121,15 @@ const JD_API_HOST = 'https://api.m.jd.com/';
 async function jdBeanHome() {
   try {
     $.doneState = false
-    let num = 0
+    // for (let i = 0; i < 3; ++i) {
+    //   await doTask2()
+    //   await $.wait(1000)
+    //   if ($.doneState) break
+    // }
     do {
       await doTask2()
       await $.wait(3000)
-      num++
-    } while (!$.doneState && num < 5)
+    } while (!$.doneState)
     await $.wait(1000)
     await award("feeds")
     await $.wait(1000)
@@ -146,10 +145,12 @@ async function jdBeanHome() {
     await $.wait(1000)
     await queryCouponInfo()
     $.doneState = false
+    let num = 0
     do {
       await $.wait(2000)
       await beanTaskList(2)
-    } while (!$.doneState)
+      num++
+    } while (!$.doneState && num < 5)
     await $.wait(2000)
     if ($.doneState) await beanTaskList(3)
 
@@ -202,16 +203,18 @@ async function beanTaskList(type) {
             switch (type) {
               case 1:
                 console.log(`当前等级:${data.data.curLevel} 下一级可领取:${data.data.nextLevelBeanNum || 0}京豆`)
-                if (!data.data.viewAppHome.takenTask) {
-                  console.log(`去做[${data.data.viewAppHome.mainTitle}]`)
-                  await beanHomeIconDoTask({"flag":"0","viewChannel":"myjd"})
-                }
-                await $.wait(2000)
-                if (!data.data.viewAppHome.doneTask) {
-                  console.log(`去领奖[${data.data.viewAppHome.mainTitle}]`)
-                  await beanHomeIconDoTask({"flag":"1","viewChannel":"AppHome"})
-                } else {
-                  console.log(`[${data.data.viewAppHome.mainTitle}]已做完`)
+                if (data.data.viewAppHome) {
+                  if (!data.data.viewAppHome.takenTask) {
+                    console.log(`去做[${data.data.viewAppHome.mainTitle}]`)
+                    await beanHomeIconDoTask({"flag":"0","viewChannel":"myjd"})
+                  }
+                  await $.wait(2000)
+                  if (!data.data.viewAppHome.doneTask) {
+                    console.log(`去领奖[${data.data.viewAppHome.mainTitle}]`)
+                    await beanHomeIconDoTask({"flag":"1","viewChannel":"AppHome"})
+                  } else {
+                    console.log(`[${data.data.viewAppHome.mainTitle}]已做完`)
+                  }
                 }
                 break
               case 2:
@@ -267,7 +270,7 @@ function beanDoTask(body, taskType) {
         } else {
           if (safeGet(data)) {
             data = JSON.parse(data);
-            if (body.actionType === 1 && (taskType !== 9 && taskType !== 8)) {s
+            if (body.actionType === 1 && (taskType !== 9 && taskType !== 8)) {
               if (data.code === "0" && data.data.bizCode === "0") {
                 console.log(`完成任务，获得+${data.data.score}成长值`)
               } else {
@@ -439,6 +442,7 @@ function getUserInfo() {
                 }
                 console.log(`\n京东账号${$.index} ${$.nickName || $.UserName} 抢京豆邀请码：${shareCode}\n`);
                 $.newShareCodes.push([shareCode, groupCode, $.UserName])
+                console.log($.newShareCodes);
               }
             }
           }
