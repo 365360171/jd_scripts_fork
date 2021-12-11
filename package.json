@@ -17,7 +17,7 @@
   "license": "ISC",
   "dependencies": {
     "@types/node": "^16.3.0",
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "brython": "^3.9.5",
     "concat": "^1.0.3",
     "crypto-js": "^4.0.0",
