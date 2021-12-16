@@ -106,18 +106,16 @@
 1 0,7,12 * * * node /scripts/jd_anjia.js >> /scripts/logs/jd_anjia.log 2>&1
 #星系牧场
 1 0-23/2 * * * node /scripts/jd_qqxing.js >> /scripts/logs/jd_qqxing.log 2>&1
-#骁龙
-10 9,17 * * * node /scripts/jd_xiaolong.js >> /scripts/logs/jd_xiaolong.log 2>&1
 #京东生鲜每日抽奖
 30 7 * * * node /scripts/jd_sxLottery.js >> /scripts/logs/jd_sxLottery.log 2>&1
-#金榜年终奖
-5 0,2 * * * node /scripts/jd_split.js >> /scripts/logs/jd_split.log 2>&1
 #京东我的理想家
 6 7 * * *  node /scripts/jd_lxLottery.js >> /scripts/logs/jd_lxLottery.log 2>&1
-#12.12暖暖红包
-0 0,12,18,20 * * * node /scripts/jd_RedEnvelope.js >> /scripts/logs/jd_RedEnvelope.log 2>&1
 #冰雪闪耀季
 30 0,2 7-24 12 * node /scripts/jd_bxsyj.js >> /scripts/logs/jd_bxsyj.log 2>&1
+#见缝插针
+15 10 * * * node /scripts/jd_jfcz.js >> /scripts/logs/jd_jfcz.log 2>&1
+#逛京东会场
+0 0,18 * * * node /scripts/jd_mall_active.js >> /scripts/logs/jd_mall_active.log 2>&1
 ##############长期活动##############
 # 签到
 0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
@@ -238,8 +236,6 @@
 14 10 * * * node /scripts/jd_sign_graphics.js >> /scripts/logs/jd_sign_graphics.log 2>&1
 #汪汪乐园每日任务
 20 7,9,17,20 * * * node /scripts/jd_joypark_task.js >> /scripts/logs/jd_joypark_task.log 2>&1
-#汪汪乐园开工位
-20 9 * * *  node /scripts/jd_joypark_open.js >> /scripts/logs/jd_joypark_open.log 2>&1
 #汪汪乐园养joy
 20 0-23/3 * * * node /scripts/jd_joypark_joy.js >> /scripts/logs/jd_joypark_joy.log 2>&1
 #天天赚京豆
