@@ -264,6 +264,8 @@
 5 0 * * * node /scripts/jd_lottery_drew.js >> /scripts/logs/jd_lottery_drew.log 2>&1
 #京东店铺锁y
 30 0,6-23 * * * node /scripts/jd_jingfen.js >> /scripts/logs/jd_jingfen.log 2>&1
+#京东评价
+37 15 * * * node /scripts/jd_evaluation.js >> /scripts/logs/jd_evaluation.log 2>&1
 ##############默认注释活动##############
 # 京东试用（默认注释，请配合取关脚本使用）
 10 0 * * *  node /scripts/jd_try.js >> /scripts/logs/jd_try.log 2>&1
