@@ -1,5 +1,5 @@
 /* 
-cron 14 10 * * * https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master//jd_sign_graphics.js
+cron 14 10 * * * https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_sign_graphics.js
 
 */
 

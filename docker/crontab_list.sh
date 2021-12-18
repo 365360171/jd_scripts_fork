@@ -116,6 +116,10 @@
 15 10 * * * node /scripts/jd_jfcz.js >> /scripts/logs/jd_jfcz.log 2>&1
 #逛京东会场
 0 0,18 * * * node /scripts/jd_mall_active.js >> /scripts/logs/jd_mall_active.log 2>&1
+#京车会签到
+19 7 * * * node /scripts/jd_jchsign.js >> /scripts/logs/jd_jchsign.log 2>&1
+#写情书抽京豆
+1 1,14 12-25 12 * node /scripts/jd_xqscjd.js >> /scripts/logs/jd_xqscjd.log 2>&1
 ##############长期活动##############
 # 签到
 0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
