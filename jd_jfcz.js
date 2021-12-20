@@ -16,7 +16,7 @@ cron "15 10 * * *" script-path=https://raw.githubusercontent.com/LingFeng0918/jd
 ====================================小火箭=============================
 见缝插针 = type=cron,script-path=https://raw.githubusercontent.com/LingFeng0918/jd_scripts/master/jd_jfcz.js, cronexpr="15 10 * * *", timeout=3600, enable=true
  */
-const $ = new Env('见缝插针');
+const $ = new Env('极速版-见缝插针');
 const notify = $.isNode() ? require('./sendNotify') : '';
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 //IOS等用户直接用NobyDa的jd cookie
@@ -26,6 +26,7 @@ let needleLevel = 1;
 let totalLevel = 400;
 let allMessage = '';
 $.cookie = '';
+let hot_flag = false
 if ($.isNode()) {
     Object.keys(jdCookieNode).forEach((item) => {
         cookiesArr.push(jdCookieNode[item])
@@ -64,7 +65,7 @@ if ($.isNode()) {
             await getNeedleLevelInfo();
             console.log('当前关卡: ',needleLevel+"/"+totalLevel)
             await $.wait(500);
-            for (let i = needleLevel; i <= totalLevel; i++) {
+            for (let i = needleLevel; i <= totalLevel && !hot_flag; i++) {
                 await getNeedleLevelInfo();
                 console.log('当前关卡: ',needleLevel+"/"+totalLevel)
                 if (needleLevel ==undefined){
@@ -78,7 +79,7 @@ if ($.isNode()) {
         }
     }
     if ($.isNode() && allMessage) {
-        await notify.sendNotify(`${$.name}`, `${allMessage}`,{ url: 'https://t.me/joinchat/DrHGFt-CvcE2ZmU1' })
+        await notify.sendNotify(`${$.name}`, `${allMessage}`,{})
     }
 })()
     .catch((e) => {
@@ -166,7 +167,7 @@ function needleMyPrize() {
                         if (data.code === 0) {
                             for(let item of data.data.items.filter(vo => vo.needleMyPrizeItemVO.prizeType===4)){
                                 if(item.needleMyPrizeItemVO.prizeStatus===0 && item.status===1){
-                                    await $.wait(5000);
+                                    await $.wait(3000);
                                     console.log(`提现${item.needleMyPrizeItemVO.prizeValue}微信现金`)
                                     await apCashWithDraw(item.needleMyPrizeItemVO.id,item.needleMyPrizeItemVO.poolBaseId,item.needleMyPrizeItemVO.prizeGroupId,item.needleMyPrizeItemVO.prizeBaseId)
                                 }
@@ -276,7 +277,10 @@ function saveNeedleLevelInfo(currentLevel) {
                         data = $.toObj(data);
                         if (data.code === 0) {
                             console.log(`关卡[${currentLevel}]通关成功\n`);
-                        } else {
+                        } else if (data.code === 1020) {
+                            console.warn('火爆,结束')
+                            hot_flag = true
+                        }else {
                             needleLevel = undefined
                             console.log(`通关异常:${JSON.stringify(data)}\n`);
                         }
