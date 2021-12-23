@@ -32,8 +32,6 @@
 20 0-23/3 * * * node /scripts/jd_jxmc.js >> /scripts/logs/jd_jxmc.log 2>&1
 #京喜牧场助力
 #10 0-23/3 * * * node /scripts/jd_jxmczl.js >> /scripts/logs/jd_jxmczl.log 2>&1
-#京喜领红包
-30 1,6,12,15,18 * * * node /scripts/jd_jxlhb.js >> /scripts/logs/jd_jxlhb.log 2>&1
 #东东电竞经理
 0 0-23/2 * * * node /scripts/jd_EsportsManager.js >> /scripts/logs/jd_EsportsManager.log 2>&1
 #8月粉丝互动
@@ -44,8 +42,6 @@
 0 12 * * * node /scripts/jd_ylyn.js >> /scripts/logs/jd_ylyn.log 2>&1
 #升级赚京豆
 21 9 * * * node /scripts/jd_MMdou.js >> /scripts/logs/jd_MMdou.log 2>&1
-#京喜领88元红包
-4 2,10 * * * node /scripts/jd_jxlhb.js >> /scripts/logs/jd_jxlhb.log 2>&1
 #5G超级盲盒
 0 0,1-23/3 * * * node /scripts/jd_mohe.js >> /scripts/logs/jd_mohe.log 2>&1
 #省钱大赢家之翻翻乐
@@ -56,12 +52,8 @@
 15 3,6 * * *  node /scripts/jd_connoisseur.js >> /scripts/logs/jd_connoisseur.log 2>&1
 #京喜购物返红包助力
 44 6-23 * * *  node /scripts/jd_jxCashback.js >> /scripts/logs/jd_jxCashback.log 2>&1
-#热血心跳,狂解压
-15 6,18 1-16,21-30 9,10 * node /scripts/jd_decompression.js >> /scripts/logs/jd_decompression.log 2>&1
 #集魔方
 16 10,19 * * * node /scripts/jd_mofang.js >> /scripts/logs/jd_mofang.log 2>&1
-#一加
-25 14 * * * node /scripts/jd_yijia.js >> /scripts/logs/jd_yijia.log 2>&1
 #幸运扭蛋
 11 12 * * * node /scripts/jd_lucky_egg.js >> /scripts/logs/jd_lucky_egg.log 2>&1
 #魔方兑换
@@ -76,10 +68,6 @@
 40 12,16 * * * node /scripts/jd_fcwb.js >> /scripts/logs/jd_fcwb.log 2>&1
 #手机竞猜
 0 0 * * * node /scripts/jd_sjjc.js >> /scripts/logs/jd_sjjc.log 2>&1
-#星推官
-22 3,4 * * * node /scripts/jd_xtg.js >> /scripts/logs/jd_xtg.log 2>&1
-#双11环游记大富翁
-0 2 1-11 11 * node /scripts/jd_travel_shop.js >> /scripts/logs/jd_travel_shop.log 2>&1
 #京东饭粒
 35 8 * * * node /scripts/jd_fanli.js >> /scripts/logs/jd_fanli.log 2>&1
 #东东世界
@@ -87,7 +75,7 @@
 #东东世界兑换
 0 0 * * * node /scripts/jd_ddworld_exchange.js >> /scripts/logs/jd_ddworld_exchange.log 2>&1
 #特务Z
-23 8,9 * * * node /scripts/jd_productZ4Brand.js >> /scripts/logs/jd_productZ4Brand.log 2>&1
+23 15,21 * * * node /scripts/jd_productZ4Brand.js >> /scripts/logs/jd_productZ4Brand.log 2>&1
 #邀请有礼
 5 11 * * * node /scripts/jd_yqyl.js >> /scripts/logs/jd_yqyl.log 2>&1
 #京东答题领金豆
@@ -178,16 +166,12 @@
 10 11 * * * node /scripts/jd_jdzz.js >> /scripts/logs/jd_jdzz.log 2>&1
 # 宠汪汪邀请助力
 10 10-20/2 * * * node /scripts/jd_joy_run.js >> /scripts/logs/jd_joy_run.log 2>&1
-# crazyJoy自动每日任务
-10 7 * * * node /scripts/jd_crazy_joy.js >> /scripts/logs/jd_crazy_joy.log 2>&1
 # 京东汽车旅程赛点兑换金豆
 0 0 * * * node /scripts/jd_car_exchange.js >> /scripts/logs/jd_car_exchange.log 2>&1
 # 导到所有互助码
 47 7 * * * node /scripts/jd_get_share_code.js >> /scripts/logs/jd_get_share_code.log 2>&1
 # 口袋书店
 7 8,12,18 * * * node /scripts/jd_bookshop.js >> /scripts/logs/jd_bookshop.log 2>&1
-# 京喜农场
-0 9,12,18 * * * node /scripts/jd_jxnc.js >> /scripts/logs/jd_jxnc.log 2>&1
 # 签到领现金
 27 7,15 * * * node /scripts/jd_cash.js >> /scripts/logs/jd_cash.log 2>&1
 # 闪购盲盒
@@ -210,8 +194,6 @@
 0 0,8,16 * * *  node /scripts/jd_reward_joy.js >> /scripts/logs/jd_reward_joy.log 2>&1
 # 宠汪汪积分兑换就有版
 58 7,15,23 * * * node /scripts/jd_joy_reward_Mod.js >> /scripts/logs/jd_joy_reward_Mod.log 2>&1
-# 京东疯狂的JOY挂机
-5 5 */2 * *  node /scripts/jd_crazy_joy_coin.js >> /scripts/logs/jd_crazy_joy_coin.log 2>&1
 # 京东摇一摇
 0 1,17 * * *   node /scripts/jd_shake.js >> /scripts/logs/jd_shake.log 2>&1
 # 店铺签到
@@ -258,12 +240,8 @@
 20 0-23/6 * * * node /scripts/jd_jddj_plantBeans.js >> /scripts/logs/jd_jddj_plantBeans.log 2>&1
 #东东超市抢京豆
 13 0,9 * * * node /scripts/jd_fission.js >> /scripts/logs/jd_fission.log 2>&1
-#京东赚京豆一分钱抽奖
-5 0 * * * node /scripts/jd_lottery_drew.js >> /scripts/logs/jd_lottery_drew.log 2>&1
 #京东店铺锁y
 30 0,6-23 * * * node /scripts/jd_jingfen.js >> /scripts/logs/jd_jingfen.log 2>&1
-#京东评价
-37 15 * * * node /scripts/jd_evaluation.js >> /scripts/logs/jd_evaluation.log 2>&1
 #京东极速版免单签到
 20 0,22 * * * node /scripts/jd_speed_md_sign.js >> /scripts/logs/jd_speed_md_sign.log 2>&1
 ##############默认注释活动##############
@@ -275,3 +253,8 @@
 # */20 * * * * node /scripts/jd_family.js >> /scripts/logs/jd_family.log 2>&1
 # jd_cash_exchange
 # 0,1,2 0 * * * node /scripts/jd_cash_exchange.js >> /scripts/logs/jd_cash_exchange.log 2>&1
+##############其他活动#################
+#爱企查日常任务
+25 8,19 * * *  node /scripts/lf_aiqiche.js >> /scripts/logs/lf_aiqiche.log 2>&1
+#爱企查商城监控
+*/10 * * * *  node /scripts/lf_aiqichaShop.js >> /scripts/logs/lf_aiqichaShop.log 2>&1
