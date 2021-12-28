@@ -218,6 +218,8 @@
 14 10 * * * node /scripts/jd_sign_graphics.js >> /scripts/logs/jd_sign_graphics.log 2>&1
 #汪汪乐园每日任务
 20 7,9,17,20 * * * node /scripts/jd_joypark_task.js >> /scripts/logs/jd_joypark_task.log 2>&1
+#汪汪乐园开工位
+20 9 * * *  node /scripts/jd_joypark_open.js >> /scripts/logs/jd_joypark_open.log 2>&1
 #汪汪乐园养joy
 20 0-23/3 * * * node /scripts/jd_joypark_joy.js >> /scripts/logs/jd_joypark_joy.log 2>&1
 #天天赚京豆
