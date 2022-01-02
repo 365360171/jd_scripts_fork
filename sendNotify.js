@@ -161,7 +161,7 @@ if (process.env.PUSH_PLUS2_USER) {
  * @param author 作者仓库等信息  例：`本脚本免费使用 By：xxxx`
  * @returns {Promise<unknown>}
  */
-async function sendNotify(text, desp, params = {}, author = '') {
+async function sendNotify(text, desp, params = {}, author = '本脚本免费使用 By:https://github.com/LingFeng0918/jd_scripts') {
   //提供6种通知
   desp += author;//增加作者信息，防止被贩卖等
   await Promise.all([

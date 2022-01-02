@@ -1,8 +1,8 @@
 
 /**
-东东世界兑换
-cron 0 0 * * * jd_ddworld_exchange.js
-*/
+ 东东世界兑换
+ cron 0 0 * * * jd_ddworld_exchange.js
+ */
 const $ = new Env("东东世界兑换");
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : '';
 const notify = $.isNode() ? require('./sendNotify') : '';
@@ -61,8 +61,11 @@ async function main() {
             if (!$.hotFlag) {
                 if ($.exchangeList) {
                     for (const vo of $.exchangeList.reverse()) {
-                        $.log(`去兑换：${vo.name}`)
-                        await taskPost('do_exchange', `id=${vo.id}`);
+                        if (!vo.name.match(/红包\d*/)) {
+                            $.log(`去兑换：${vo.name}`)
+                            await taskPost('do_exchange', `id=${vo.id}`);
+                            await $.wait(3000)
+                        }
                     }
                 } else {
                     $.log("没有获取到兑换列表！")
