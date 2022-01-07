@@ -802,7 +802,7 @@ function taskGetUrl(function_id, body) {
 function invite2() {
     let t = +new Date()
     let inviterId = [
-        ""
+        "0OC2g5iHa6Yhb/EdQM6DOg=="
     ]
     let headers = {
         'Host': 'api.m.jd.com',
@@ -829,7 +829,7 @@ function invite2() {
 
 function invite() {
     let t = +new Date()
-    let inviterId = [""]
+    let inviterId = ["0OC2g5iHa6Yhb/EdQM6DOg=="]
     var headers = {
         'Host': 'api.m.jd.com',
         'accept': 'application/json, text/plain, */*',
