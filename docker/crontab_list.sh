@@ -104,6 +104,16 @@
 0 0,8 * * * node /scripts/jd_lzdz1_customized.js >> /scripts/logs/jd_lzdz1_customized.log 2>&1
 #年货盛宴 春节集福攻略
 0 0,8 * * * node /scripts/jd_lzdz1_customized2.js >> /scripts/logs/jd_lzdz1_customized2.log 2>&1
+#会场红包
+0 0,12,20,23 * * * node /scripts/jd_nhs_red.js >> /scripts/logs/jd_nhs_red.log 2>&1
+#城城分现金
+0 22,0-23/5 9-21 1 * node /scripts/jd_city.js >> /scripts/logs/jd_city.log 2>&1
+#炸年兽
+0 0-23/5 * * * node /scripts/jd_zns.js >> /scripts/logs/jd_zns.log 2>&1
+#头文子J
+5 7 * * * node /scripts/jd_mpdzcar.js >> /scripts/logs/jd_mpdzcar.log 2>&1
+#头文字J 游戏
+10 6,10,12 * * * node /scripts/jd_mpdzcar_game.js >> /scripts/logs/jd_mpdzcar_game.log 2>&1
 ##############长期活动##############
 # 签到
 0 0,18 * * * cd /scripts && node jd_bean_sign.js >> /scripts/logs/jd_bean_sign.log 2>&1
