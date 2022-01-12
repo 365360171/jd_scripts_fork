@@ -6,16 +6,8 @@
   Q：明明有任务，但是识别不出来就退出了
   A：目前发现分身的应用有这种问题，可重启应用和脚本重进，一般即可解决
 
-  20220109 V1.0
-  新增脚本
-  20220109 V1.1
-  修复同时助力多个账号时会跳过部分助力码的问题
-  20220110 V1.2
-  识图增加模糊判断
-  进入任务界面增加弹窗判断
-  增加自动签到
-  内置跳过入会、小程序和加购任务语句，按个人需要取消屏蔽即可，关键字“跳过任务”
- by 嘉佳
+  20220110 V1.5.1
+
 */
 Start();
 console.info("开始任务");
@@ -491,29 +483,32 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
             }
         }
     }
-    console.log("寻找未完成任务……");
-    let task1 = textContains("点击首页浮层可得").find()
+    console.log("寻找未领取奖励的任务……");
+    let task1 = textMatches(/.*点击首页浮层可得.*|.*去组队可得.*/).find()
     if (task1.empty()) {
         sleep(100);
     }
     else{
-        let task1Button
+        let task1Button,task1Text
         let task1img = captureScreen();
         for (let i = 0; i < task1.length; i++) {
             let task1item = task1[i]
+            task1Text = task1item.text();
             task1Button = task1item.parent().child(3);
             let task1b = task1item.bounds()
             let task1color = images.pixel(task1img, task1b.left+task1b.width()/8, task1b.top+task1b.height()/2)
-            console.error(colors.parseColor(task1color));
-            if (task1color == "-3366") {
-                console.log("领取点击首页浮层奖励");
+            console.error(colors.red(task1color)+","+colors.green(task1color)+","+colors.blue(task1color)+","+colors.alpha(task1color));
+            console.error(task1color);
+            if (colors.isSimilar(task1color, "#fff2da",60,"diff") |colors.isSimilar(task1color, "#caa282",60,"diff") |task1color == -3366) {
+                console.log(task1Text);
                 task1Button.click();
-                break;
+                sleep(2000);
             }
         }
     }
+    console.log("寻找未完成任务……");
     while (true) {
-        let taskButtons = textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*|.*成功入会.*|.*小程序.*/).find()
+        let taskButtons = textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*|.*成功入会.*|.*小程序.*|.*玩AR游戏可得5000爆竹.*/).find()
         if (taskButtons.empty()) {
             console.log("未找到合适的任务，退出");
             sleep(3000);
@@ -692,6 +687,10 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 console.info("已是当前店铺会员");
                 console.log("任务完成");
             }
+        } else if (taskText.match(/玩AR游戏可得5000爆竹/)) {
+            console.log("进行", taskText);
+            taskButton.click();
+            sleep(2000);
         } else if (taskText.match(/浏览并关注可得|浏览可得|浏览即可得/)) {
             console.log("进行", taskText);
             let taskItemText = taskButton.parent().child(1).text()
@@ -736,28 +735,23 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
     }
     if(text("当前进度10/10").exists()){
         console.log("领取累计任务奖励");
-        setScreenMetrics(1440, 3120);//基于分辨率1440*3120的点击
-        text("当前进度10/10").findOne().parent().child(2).child(1).click();
-        sleep(500);
-        if(text("放入我的＞我的优惠券").exists()){
-            console.log( )
-            text("放入我的＞我的优惠券").findOne().parent().parent().child(0).click();
-            sleep(100);
+        for(var i = 1; text("当前进度10/10").exists() && i < 4; i++){
+            console.log("第" + i + "个宝箱");
+            text("当前进度10/10").findOne().parent().child(2).child(i).click();
+            sleep(500);
+            if(text("放入我的＞我的优惠券").exists()){
+                console.log("发现优惠券")
+                text("放入我的＞我的优惠券").findOne().parent().parent().child(0).click();
+                sleep(100);
+            }
+            if(textContains("开心收下").exists()){
+                console.log("开心收下")
+                textContains("开心收下").findOne().parent().click();
+                sleep(100);
+            }
+            sleep(500);
         }
-        text("当前进度10/10").findOne().parent().child(2).child(2).click();
-        sleep(500);
-        if(text("放入我的＞我的优惠券").exists()){
-            text("放入我的＞我的优惠券").findOne().parent().parent().child(0).click();
-            sleep(100);
-        }
-        text("当前进度10/10").findOne().parent().child(2).child(3).click();
-        sleep(500);
-        if(text("放入我的＞我的优惠券").exists()){
-            text("放入我的＞我的优惠券").findOne().parent().parent().child(0).click();
-            sleep(100);
-        }
-        console.log("累计任务奖励领取成功");
-        setScreenMetrics(device.width, device.height);//恢复本机分辨率
+        console.log("累计任务奖励领取完毕");
         sleep(2000);
     }
 }

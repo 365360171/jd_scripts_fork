@@ -2,8 +2,7 @@
   京东<集爆竹炸年兽>小程序任务
   需手动进入任务界面，注意脚本提醒
 
-  20220109 V1.0
-  新增脚本
+  20220109 V1.3
    by 嘉佳
  */
 Start();
@@ -34,7 +33,11 @@ function Start() {
         console.log("请求截图失败");
         exit();
     }
-    console.log("请尽快进入活动界面")
+    console.log("请在5s内进入活动界面")
+    for(var i = 0; i <= 5; i++){
+        sleep(1000);
+        console.log(5-i)
+    }
 }
 
 function Run(){
@@ -45,6 +48,7 @@ function Run(){
                 if(textContains("后满").exists() |!textContains("爆竹满了").exists()){
                     break;
                 }
+                console.log("当前应用名:  " + app.getAppName(currentPackage()));
                 console.log("未识别到活动相关界面，继续等待……")
             }
             if(i >= 10){
@@ -70,6 +74,7 @@ function Run(){
     while (true) {
         let taskButtons = textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*/).find()
         if (taskButtons.empty()) {
+            console.log("当前应用名:  " + app.getAppName(currentPackage()));
             console.log("未找到合适的任务，退出");
             sleep(3000);
             break;
@@ -82,8 +87,9 @@ function Run(){
             item = item.parent().child(4);
             let b = item.bounds()
             let color = images.pixel(img, b.left+b.width()/8, b.top+b.height()/2)
-            if (colors.isSimilar(color, "#f75552")) {
-                //if (taskText.match(/成功入会/)) continue //如果有任务需要忽略可参考此格式
+            if (colors.isSimilar(color, "#f75552",40,"diff")) {//如依然无法识别任务，可尝试继续调大第三个参数的识别范围，0~255之间，数字越大，匹配范围越大
+                //跳过任务
+                //if (taskText.match(/成功入会/)) continue
                 if (taskText.match(/成功入会/) && IsJoinMember == 0) {
                     console.log("识别到入会任务，当前设置为<不执行入会>，即将进入下一任务");
                     sleep(1000);
