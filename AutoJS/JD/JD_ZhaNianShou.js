@@ -11,9 +11,8 @@
 
   Q：打开任务列表后识别不到任务
   A：检查下自己手机有没有打开什么悬浮窗，比如autojs的悬浮球、录屏的悬浮窗之类的，关掉再试试
-  20220112 V1.8
-  新增品牌墙任务
-  修改组队任务和首页浮窗任务
+
+   V1.8.1
 
 */
 Start();
@@ -719,8 +718,18 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
             timeTask();
         } else if (taskText.match(/点击首页浮层可得/)) {
             console.log("进行", taskText);
-            task1Button.click();
+            taskButton.click();
             sleep(2000);
+            /* 如果任务按钮为去完成，则此处应该有弹窗 */
+            if(!text("首页").exists()){
+                console.log("未识别到首页，等待5秒待跳转");
+                if(text("首页").findOne(5000) == null){
+                    console.log("未识别到首页，退出活动重进");
+                    back();
+                    sleep(500);
+                    back();
+                }
+            }
             if(!text("累计任务奖励").exists()){
                 if(!textMatches(/.*消耗.*爆竹/).exists()){
                     for(var i = 0; !textMatches(/.*消耗.*爆竹/).exists(); i++){
@@ -773,8 +782,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 }
             }
             else{
-                console.log("检测到任务列表");
-                PageStatus=2//已打开任务列表
+                console.log("领取奖励");
             }
             console.log("任务完成");
         } else if (taskText.match(/品牌墙店铺/)) {
@@ -901,7 +909,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
             console.log("返回");
             back();
             sleep(1000);
-            if(i==5){
+            if(i == 5){
                 console.log("无法返回任务界面，退出当前任务");
                 return;
             }
