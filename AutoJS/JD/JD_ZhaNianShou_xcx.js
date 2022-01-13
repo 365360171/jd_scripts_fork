@@ -4,9 +4,8 @@
 
   Q：小程序脚本打开任务列表后识别不到任务
   A：检查下自己手机有没有打开什么悬浮窗，比如autojs的悬浮球、录屏的悬浮窗之类的，关掉再试试
-
-  20220112 V1.7
-  尝试修复循环做同一任务的问题
+  20220113 V1.8
+  增加重复任务检测，当连续做3次相同任务后，退出脚本
  */
 Start();
 console.info("开始任务");
@@ -36,15 +35,15 @@ function Start() {
         console.log("请求截图失败");
         exit();
     }
-    console.log("请在5s内进入活动界面")
-    for(var i = 0; i <= 5; i++){
+    console.log("请在10s内进入活动界面")
+    for(var i = 0; i <= 10; i++){
         sleep(1000);
-        console.log(5-i)
+        console.log(10 - i)
     }
 }
 
 function Run(){
-    if(!text("浏览8s可得").exists()){
+    if(!textContains("浏览8s可得").exists()){
         if(!textContains("后满").exists() |!textContains("爆竹满了").exists()){
             for(var i = 0; !textMatches(/.*消耗.*爆竹/).exists() && i < 10; i++){
                 sleep(3000);
@@ -74,6 +73,8 @@ function Run(){
         PageStatus=2//已打开任务列表
     }
     sleep(1000);
+    let OverState = 0
+    let OldtaskText = ""
     while (true) {
         let taskButtons = textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*/).find()
         if (taskButtons.empty()) {
@@ -84,13 +85,13 @@ function Run(){
         }
         let taskButton, taskText
         let img = captureScreen()
-        for (let i = 0; i < taskButtons.length; i++) {
-            let item = taskButtons[i]
+        for (var i = 0; i < taskButtons.length; i++) {
+            let item = taskButtons[i];
             taskText = item.text();
             item = item.parent().child(4);
             let b = item.bounds()
             let color = images.pixel(img, b.left+b.width()/8, b.top+b.height()/2)
-            console.info("识别任务<"+item.parent().child(1).text()+">中……");
+            console.info("识别任务<" + item.parent().child(1).text() + ">中……");
             console.error("识别任务状态("+colors.red(color)+","+colors.green(color)+","+colors.blue(color)+")");
             if (colors.isSimilar(color, "#b5b5b5",40,"diff")) {
                 console.log("任务已完成，即将识别下一任务");
@@ -115,13 +116,24 @@ function Run(){
             break;
         }
 
+        if (OldtaskText == taskText) {
+            OverState = OverState + 1
+        } else {
+            OldtaskText = taskText
+        }
+        if(OverState > 3) {
+            console.log("检测到重复执行相同任务，退出当前任务");
+            sleep(2000);
+            break;
+        }
+
         function timeTask() {
             taskButton.click();
             sleep(1000);
             console.log("等待浏览任务完成……");
             let c = 0
             while (c < 9) { // 9秒，防止死循环
-                let finish_reg = /获得.*?爆竹|浏览完成|任务已达上限/
+                let finish_reg = /获得.*?爆竹|浏览完成|已达上限/
                 if ((textMatches(finish_reg).exists() || descMatches(finish_reg).exists())){ // 等待已完成出现，有可能失败
                     break;
                 }
@@ -146,8 +158,8 @@ function Run(){
             sleep(1000);
             console.log("等待进入商品列表……");
             textEndsWith("4个商品领爆竹").waitFor();//当前页浏览加购4个商品领爆竹|当前页点击浏览4个商品领爆竹
-            let items = textEndsWith("4个商品领爆竹").findOne();
             for (let i = 0; i < 4; i++) {
+                let items = textEndsWith("4个商品领爆竹").findOne();
                 if (cart) {
                     console.log("加购并浏览");
                     boundsX = items.parent().parent().child(2).child(i).child(4).bounds().centerX();
@@ -163,10 +175,19 @@ function Run(){
                 console.log("返回");
                 back();
                 sleep(1000);
-                while(!textEndsWith("4个商品领爆竹").exists()){
-                    console.log("再次返回");
+                for(var ii = 0; !textEndsWith("4个商品领爆竹").exists(); ii++){
+                    if(ii == 0){
+                        console.log("返回");
+                    }else {
+                        console.log("再次返回");
+                    }
                     back();
                     sleep(2000);
+                    if(ii > 4){
+                        console.error("任务异常，退出当前账号");
+                        home();
+                        return;
+                    }
                 }
                 if (i >= 3) {
                     break;

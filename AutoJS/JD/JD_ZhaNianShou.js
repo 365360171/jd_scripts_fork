@@ -12,7 +12,13 @@
   Q：打开任务列表后识别不到任务
   A：检查下自己手机有没有打开什么悬浮窗，比如autojs的悬浮球、录屏的悬浮窗之类的，关掉再试试
 
-   V1.8.1
+  20220113 V1.8.2
+  尝试修复品牌墙任务报错，如执行中还有问题，请自行屏蔽品牌墙任务并反馈
+  尝试修复小程序任务，如执行中还有问题，请自行屏蔽小程序任务并反馈
+  尝试修复加购任务报错，如执行中还有问题，请自行屏蔽加购任务并反馈
+  修复无法识别AR游戏任务问题
+  修复任务完成后不领取累计奖励问题
+  稍微延长组队任务领取奖励的 等待时间
 
 */
 Start();
@@ -33,7 +39,7 @@ sleep(1000);
  */
 //京东例子
 //Run("京东",0,0,2);home();
-//Run("京东",1,1,0);home();
+//Run("京东",1,0,0);home();
 //Run("京东-2",1,0,0);home();
 //手动例子
 Run("手动",0,0,0);home();
@@ -376,8 +382,6 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
         back();
         sleep(100);
         back();
-        sleep(100);
-        back();
         sleep(SleepTime);
     }
 
@@ -528,13 +532,13 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                     if (colors.isSimilar(task1color, "#fff2da",60,"diff") |colors.isSimilar(task1color, "#caa282",60,"diff") |task1color == -3366) {
                         console.log("进行", task1Text);
                         task1Button.click();
-                        sleep(2000);
+                        sleep(3000);
                         console.log("领取成功");
                     }
                 }
             }
         }
-        let taskButtons = textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*|.*成功入会.*|.*小程序.*|.*每日6-9点打卡可得.*|.*点击首页浮层可得.*|.*品牌墙店铺.*|.*玩AR游戏可得5000爆竹.*/).find()
+        let taskButtons = textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*|.*成功入会.*|.*小程序.*|.*每日6-9点打卡可得.*|.*点击首页浮层可得.*|.*品牌墙店铺.*|.*玩AR游戏可得.*爆竹.*/).find()
         if (taskButtons.empty()) {
             console.log("未找到合适的任务，退出");
             sleep(3000);
@@ -556,6 +560,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
             else{
                 //跳过任务
                 //if (taskText.match(/成功入会/)) continue
+                //if (taskText.match(/品牌墙店铺/)) continue
                 //if (taskText.match(/小程序/)) continue
                 //if (taskText.match(/加购/)) continue
                 if (taskText.match(/成功入会/) && IsJoinMember == 0) {
@@ -571,10 +576,6 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
         if (!taskButton) {
             console.log("未找到可自动完成的任务，退出当前任务");
             console.log("互动任务需要手动完成");
-            sleep(1000);
-            back();
-            sleep(1000);
-            back();
             break;
         }
 
@@ -649,14 +650,20 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
             textEndsWith("4个商品领爆竹").waitFor();//当前页浏览加购4个商品领爆竹|当前页点击浏览4个商品领爆竹
             if (!textContains('.jpg!q70').exists()) {
                 console.log("模式2");
-                let items = textEndsWith("4个商品领爆竹").findOne();
-                for (let i = 0; i < 4; i++) {
+                for (var i = 0; i < 4; i++) {
+                    let Model2items = textEndsWith("4个商品领爆竹").findOne();
                     if (cart) {
-                        console.log("加购并浏览");
-                        items.parent().parent().child(2).child(i).child(4).click();
+                        console.log("第"+ ( i + 1 ) +"次加购");
+                        console.log('待加购');
+                        sleep(200);
+                        if(!Model2items.parent().parent()){
+                            console.error("界面异常，跳过此商品");
+                            continue;
+                        }
+                        Model2items.parent().parent().child(2).child(i).child(4).click();
                     } else {
-                        console.log("浏览商品页");
-                        items.parent().parent().child(2).child(i).child(4).click();
+                        console.log("第"+ ( i + 1 ) +"次浏览");
+                        Model2items.parent().parent().child(2).child(i).child(4).click();
                     }
                     sleep(1000);
                     for(var ii = 0; !textEndsWith("4个商品领爆竹").exists(); ii++){
@@ -668,7 +675,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                         back();
                         sleep(2000);
                         if(ii > 4){
-                            console.error("加购任务异常，退出当前账号");
+                            console.error("任务异常，退出当前账号");
                             home();
                             return;
                         }
@@ -680,15 +687,21 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
             }
             else{
                 console.log("模式1");
-                let items = textContains('.jpg!q70').find();
-                for (let i = 0; i < 4; i++) {
+                for (var i = 0; i < 4; i++) {
+                    let Model1items = textContains('.jpg!q70').find();
                     if (cart) {
-                        console.log('加购并浏览');
-                        let tmp = items[i].parent().parent();
-                        tmp.child(tmp.childCount() - 1).click();
+                        console.log("第"+ ( i + 1 ) +"次加购");
+                        let Model1tmp = Model1items[i].parent().parent();
+                        console.log('待加购');
+                        sleep(200);
+                        if(!Model1tmp){
+                            console.error("界面异常，跳过此商品");
+                            continue;
+                        }
+                        Model1tmp.child(Model1tmp.childCount() - 1).click();
                     } else {
-                        console.log('浏览商品页');
-                        items[i].parent().parent().child(4).click();
+                        console.log("第"+ ( i + 1 ) +"次浏览");
+                        Model1items[i].parent().parent().child(4).click();
                     }
                     sleep(1000);
                     for(var ii = 0; !textEndsWith("4个商品领爆竹").exists(); ii++){
@@ -749,6 +762,10 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                             console.log("识别超时，退出当前任务");
                             return;
                         }
+                        if(text("累计任务奖励").exists()){
+                            console.log("已检测到任务页面");
+                            break;
+                        }
                         sleep(3000);
                     }
                     if(textMatches(/.*消耗.*爆竹/).exists()){
@@ -760,6 +777,54 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                     console.log("检测到活动页面");
                     PageStatus=1//进入活动页面，未打开任务列表
                 }
+                if(!text("累计任务奖励").exists()){
+                    console.info("准备打开任务列表");
+                    let taskListButton = textMatches(/.*消耗.*爆竹/).findOne(10000)
+                    if (!taskListButton) {
+                        console.log("未能识别关键节点，退出当前任务");
+                        return;
+                    }
+                    setScreenMetrics(1440, 3120);//基于分辨率1440*3120的点击
+                    click(1275,2100);
+                    click(1275,2100);
+                    sleep(2000);
+                    setScreenMetrics(device.width, device.height);//恢复本机分辨率
+                }
+                for(var i = 0; !text("累计任务奖励").exists(); i++){
+                    console.log("未识别到任务列表，请手动打开")
+                    sleep(3000);
+                    if(i >= 10){
+                        console.log("未按时打开任务列表，退出当前任务");
+                        return;
+                    }
+                }
+            }
+            else{
+                console.log("领取奖励");
+            }
+            console.log("任务完成");
+        } else if (taskText.match(/品牌墙店铺/)) {
+            console.log("进行", taskText);
+            taskButton.click();
+            sleep(1000);
+            if(textContains("后满").exists()){
+                var task2 = textContains("后满").findOne().parent().parent()
+                for(var i = 0; i < 3; i++){
+                    console.log("第" + ( i + 1 ) + "个店铺")
+                    task2.child(task2.childCount()-3).child(0).child(1).child(i).click();
+                    sleep(1500);
+                    for(var ii = 0;!textContains("后满").exists(); ii++){
+                        console.log("返回")
+                        back();
+                        sleep(1500);
+                        if(ii > 4){
+                            console.log("返回活动界面，退出当前任务");
+                            return;
+                        }
+                    }
+                }
+                task2.child(task2.childCount()-1).click();//返回
+                sleep(1000);
                 console.info("准备打开任务列表");
                 let taskListButton = textMatches(/.*消耗.*爆竹/).findOne(10000)
                 if (!taskListButton) {
@@ -782,46 +847,66 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 }
             }
             else{
-                console.log("领取奖励");
-            }
-            console.log("任务完成");
-        } else if (taskText.match(/品牌墙店铺/)) {
-            console.log("进行", taskText);
-            taskButton.click();
-            sleep(1000);
-            if(text("爆竹满了~~").exists()){
-                var task2 = text("爆竹满了~~").findOne().parent().parent()
-            }
-            else if(textContains("后满").exists()){
-                var task2 = textContains("后满").findOne().parent().parent()
-            }
-            for(var i = 0; i < 3; i++){
-                console.log("第" + ( i + 1 ) + "个店铺")
-                task2.child(task2.childCount()-3).child(0).child(1).child(i).click();
-                sleep(1000);
-                back();
-                sleep(1000);
-            }
-            task2.child(task2.childCount()-1).click();//返回
-            sleep(1000);
-            console.info("准备打开任务列表");
-            let taskListButton = textMatches(/.*消耗.*爆竹/).findOne(10000)
-            if (!taskListButton) {
-                console.log("未能识别关键节点，退出当前任务");
-                return;
-            }
-            setScreenMetrics(1440, 3120);//基于分辨率1440*3120的点击
-            click(1275,2100);
-            click(1275,2100);
-            sleep(2000);
-            setScreenMetrics(device.width, device.height);//恢复本机分辨率
+                console.log("未能识别关键节点，重进活动页面");
+                if(!text("首页").exists()){
+                    console.log("未识别到首页，等待5秒待跳转");
+                    if(text("首页").findOne(5000) == null){
+                        console.log("未识别到首页，退出活动重进");
+                        back();
+                        sleep(500);
+                        back();
+                    }
+                }
+                if(!text("累计任务奖励").exists()){
+                    if(!textMatches(/.*消耗.*爆竹/).exists()){
+                        for(var i = 0; !textMatches(/.*消耗.*爆竹/).exists(); i++){
+                            console.log("未识别到活动页面，尝试通过首页浮层进入");
+                            if(text("首页").exists()){
+                                let into = descContains("浮层活动").findOne(20000);
+                                sleep(2000);
+                                if (into == null) {
+                                    console.log("无法找到京东活动入口，退出当前任务");
+                                    return;
+                                }
+                                click(into.bounds().centerX(), into.bounds().centerY());
+                                click(into.bounds().centerX(), into.bounds().centerY());
+                                sleep(3000);
+                            }
+                            if(i > 10){
+                                console.log("识别超时，退出当前任务");
+                                return;
+                            }
+                            sleep(3000);
+                        }
+                        if(textMatches(/.*消耗.*爆竹/).exists()){
+                            console.log("已检测到活动页面");
+                            PageStatus=1//进入活动页面，未打开任务列表
+                        }
+                    }
+                    else{
+                        console.log("检测到活动页面");
+                        PageStatus=1//进入活动页面，未打开任务列表
+                    }
+                    console.info("准备打开任务列表");
+                    let taskListButton = textMatches(/.*消耗.*爆竹/).findOne(10000)
+                    if (!taskListButton) {
+                        console.log("未能识别关键节点，退出当前任务");
+                        return;
+                    }
+                    setScreenMetrics(1440, 3120);//基于分辨率1440*3120的点击
+                    click(1275,2100);
+                    click(1275,2100);
+                    sleep(2000);
+                    setScreenMetrics(device.width, device.height);//恢复本机分辨率
 
-            for(var i = 0; !text("累计任务奖励").exists(); i++){
-                console.log("未识别到任务列表，请手动打开")
-                sleep(3000);
-                if(i >= 10){
-                    console.log("未按时打开任务列表，退出当前任务");
-                    return;
+                    for(var i = 0; !text("累计任务奖励").exists(); i++){
+                        console.log("未识别到任务列表，请手动打开")
+                        sleep(3000);
+                        if(i >= 10){
+                            console.log("未按时打开任务列表，退出当前任务");
+                            return;
+                        }
+                    }
                 }
             }
         } else if (taskText.match(/累计浏览/)) {
@@ -870,7 +955,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 console.info("已是当前店铺会员");
                 console.log("任务完成");
             }
-        } else if (taskText.match(/玩AR游戏可得5000爆竹|每日6-9点打卡/)) {
+        } else if (taskText.match(/玩AR游戏可得|每日6-9点打卡/)) {
             console.log("进行", taskText);
             taskButton.click();
             sleep(2000);
@@ -914,8 +999,13 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 return;
             }
             if(text("领京豆").exists() && text("首页").exists()){
-                console.log("发现首页，尝试退出返回原任务列表");
+                console.log("发现首页，尝试退出并返回原任务列表");
                 OutAPP(100);
+                sleep(2000);
+                if(text("累计任务奖励").exists()){
+                    console.log("已返回任务列表");
+                    break;
+                }
             }
         }
         console.info("准备下一个任务");
@@ -945,8 +1035,12 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
             sleep(500);
         }
         console.log("累计任务奖励领取完毕");
-        sleep(2000);
+        sleep(1000);
     }
+    sleep(500);
+    back();
+    sleep(500);
+    back();
 }
 
 function CleanCache(LauchAPPName,Isclean) {
