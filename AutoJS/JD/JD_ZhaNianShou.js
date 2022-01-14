@@ -12,13 +12,14 @@
   Q：打开任务列表后识别不到任务
   A：检查下自己手机有没有打开什么悬浮窗，比如autojs的悬浮球、录屏的悬浮窗之类的，关掉再试试
 
-  20220113 V1.8.2
-  尝试修复品牌墙任务报错，如执行中还有问题，请自行屏蔽品牌墙任务并反馈
-  尝试修复小程序任务，如执行中还有问题，请自行屏蔽小程序任务并反馈
-  尝试修复加购任务报错，如执行中还有问题，请自行屏蔽加购任务并反馈
-  修复无法识别AR游戏任务问题
-  修复任务完成后不领取累计奖励问题
-  稍微延长组队任务领取奖励的 等待时间
+  2.0更新计划：
+  精简代码，合并重复动作，提高代码可读性
+  任务关键字前置，方便屏蔽不想做的任务
+  增加任务状态判断，细分去完成、领奖励和已完成不同状态的操作内容，提高任务完成准确度
+
+  20220114 V1.9
+  修改小程序、首页浮层、组队任务返回逻辑，提高任务成功率
+  撤销V1.7的<助力模式下返回主页，以便完成点击悬浮窗任务>修改内容
 
 */
 Start();
@@ -42,7 +43,7 @@ sleep(1000);
 //Run("京东",1,0,0);home();
 //Run("京东-2",1,0,0);home();
 //手动例子
-Run("手动",0,0,0);home();
+Run("手动",0,1,1);home();
 //分身有术缓存清理
 //CleanCache("分身有术Pro",1);
 console.info("结束任务");
@@ -122,7 +123,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
     sleep(2000);
     if(IsInvite == 1){
         //将京口令分段填入，只要里面的特征码即可，分不清什么是特征码的也可以整段放进来，注意用双引号和逗号隔开
-        Code=new Array("￥91yW609MICRID%","#8Bk234cWiPXav@");//邀请码第一个是助力作者，第二个纯属举例，使用时建议删除
+        Code=new Array("￥91yW609MICRID%","#8Bk234cWiPXav@","#5AdzgD3bFepFs%","#41U9D9iIq5GlS@","#6BKkL5Xe9ZgHq@","#35bUyDRs21QXA%");//邀请码第一个是助力作者，第二个纯属举例，使用时建议删除
         RunTime=Code.length;
         console.info("共识别到"+RunTime+"个助力码");
         for(var i = 0; i < RunTime; i++){
@@ -274,10 +275,10 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 console.log("准备第" + ( i + 2 ) + "个助力码");
             }
             else{
-                console.log("当前账户已助力完成，返回首页");
-                back();
-                sleep(500);
-                back();
+                console.log("当前账户已助力完成");
+                //back();
+                //sleep(500);
+                //back();
             }
         }
     }
@@ -533,7 +534,33 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                         console.log("进行", task1Text);
                         task1Button.click();
                         sleep(3000);
+                        for(var ii = 0; !text("累计任务奖励").exists(); ii++){
+                            sleep(1000);
+                            console.log("返回");
+                            back();
+                            sleep(2000);
+                            if(textMatches(/.*消耗.*爆竹/).exists()){
+                                console.log("已返回活动界面");
+                                break;
+                            }
+                        }
                         console.log("领取成功");
+                        if(!text("累计任务奖励").exists() && textMatches(/.*消耗.*爆竹/).exists()){
+                            console.log("未识别到任务列表，尝试自动打开");
+                            setScreenMetrics(1440, 3120);//基于分辨率1440*3120的点击
+                            click(1275,2100);
+                            click(1275,2100);
+                            sleep(2000);
+                            setScreenMetrics(device.width, device.height);//恢复本机分辨率
+                        }
+                        for(var ii = 0; !text("累计任务奖励").exists(); ii++){
+                            console.log("未识别到任务列表，请手动打开");
+                            sleep(3000);
+                            if(ii >= 10){
+                                console.log("未按时打开任务列表，退出当前任务");
+                                return;
+                            }
+                        }
                     }
                 }
             }
@@ -812,7 +839,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 for(var i = 0; i < 3; i++){
                     console.log("第" + ( i + 1 ) + "个店铺")
                     task2.child(task2.childCount()-3).child(0).child(1).child(i).click();
-                    sleep(1500);
+                    sleep(3500);
                     for(var ii = 0;!textContains("后满").exists(); ii++){
                         console.log("返回")
                         back();
@@ -925,13 +952,13 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 if(id("ffp").exists()){
                     id("ffp").findOne().click();
                     console.log("跳转微信异常，准备返回");
-                    sleep(1000);
+                    sleep(1500);
                 }else if(text("取消").exists()){
                     text("取消").findOne().click();
                     console.log("取消");
-                    sleep(1000);
+                    sleep(1500);
                 }
-                sleep(1000);
+                sleep(2000);
             }
             console.log("任务完成");
         } else if (taskText.match(/成功入会/)) {
@@ -959,6 +986,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
             console.log("进行", taskText);
             taskButton.click();
             sleep(2000);
+            console.log("任务完成");
         } else if (taskText.match(/浏览并关注可得|浏览可得|浏览即可得/)) {
             console.log("进行", taskText);
             let taskItemText = taskButton.parent().child(1).text()
@@ -987,7 +1015,7 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 taskButton.click();
                 sleep(2000);
             }
-            console.log("普通浏览任务完成");
+            console.log("任务完成");
         }
 
         for(var i = 0; text("累计任务奖励").findOnce() == null; i++){
@@ -998,7 +1026,19 @@ function Run(LauchAPPName,IsSeparation,IsInvite,IsJoinMember) {
                 console.log("无法返回任务界面，退出当前任务");
                 return;
             }
-            if(text("领京豆").exists() && text("首页").exists()){
+            while(id("ffp").exists() |text("取消").exists()){
+                if(id("ffp").exists()){
+                    id("ffp").findOne().click();
+                    console.log("跳转微信异常，准备返回");
+                    sleep(1500);
+                }else if(text("取消").exists()){
+                    text("取消").findOne().click();
+                    console.log("取消");
+                    sleep(1500);
+                }
+                sleep(2000);
+            }
+            if((text("领京豆").exists() && text("首页").exists())| (app.getAppName(currentPackage()) == "京东" && text("首页").exists())){
                 console.log("发现首页，尝试退出并返回原任务列表");
                 OutAPP(100);
                 sleep(2000);

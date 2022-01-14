@@ -4,8 +4,18 @@
 
   Q：小程序脚本打开任务列表后识别不到任务
   A：检查下自己手机有没有打开什么悬浮窗，比如autojs的悬浮球、录屏的悬浮窗之类的，关掉再试试
-  20220113 V1.8
-  增加重复任务检测，当连续做3次相同任务后，退出脚本
+
+  Q：为什么不停的在做任务，但是任务列表上只有一个已完成
+  A：这个版本是这样的，继续运行就行，每次做的都是下面位置的任务，全做完了，列表也会全完成
+
+  Q：为什么没有任务列表的时候也会继续识别任务，并且执行？
+  A：这个版本是这样的，在脚本进入等待时间的时候，手动返回任务列表，并开启一个任务，后续任务就正常了
+
+  20220114 V1.9
+  任务识别延长到10秒，注意浮窗提示的当前应用名
+  重复任务检测增加到8次才退出（前期任务量大的情况下，依然有可能会提前退出，再次执行脚本即可）
+  修复累计浏览任务报错
+
  */
 Start();
 console.info("开始任务");
@@ -76,13 +86,21 @@ function Run(){
     let OverState = 0
     let OldtaskText = ""
     while (true) {
-        let taskButtons = textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*/).find()
-        if (taskButtons.empty()) {
-            console.log("当前应用名:  " + app.getAppName(currentPackage()));
+        for(var i = 0; i < 10; i++){
+            if(textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*/).exists()){
+                break;
+            }
+            console.log("当前应用名:  " + app.getAppName(currentPackage())+ "\n"
+                +"当前活动:  " + currentActivity()+ "\n"
+                +"未识别到任务相关界面，继续等待……");
+            sleep(1000);
+        }
+        if(i >= 10){
             console.log("未找到合适的任务，退出");
             sleep(3000);
             break;
         }
+        let taskButtons = textMatches(/.*浏览.*s.*|.*浏览.*秒.*|.*累计浏览.*|.*浏览即可得.*|.*浏览并关注可得.*|.*浏览可得.*/).find()
         let taskButton, taskText
         let img = captureScreen()
         for (var i = 0; i < taskButtons.length; i++) {
@@ -121,7 +139,7 @@ function Run(){
         } else {
             OldtaskText = taskText
         }
-        if(OverState > 3) {
+        if(OverState > 8) {
             console.log("检测到重复执行相同任务，退出当前任务");
             sleep(2000);
             break;
@@ -157,43 +175,60 @@ function Run(){
             taskButton.click();
             sleep(1000);
             console.log("等待进入商品列表……");
-            textEndsWith("4个商品领爆竹").waitFor();//当前页浏览加购4个商品领爆竹|当前页点击浏览4个商品领爆竹
-            for (let i = 0; i < 4; i++) {
-                let items = textEndsWith("4个商品领爆竹").findOne();
-                if (cart) {
-                    console.log("加购并浏览");
-                    boundsX = items.parent().parent().child(2).child(i).child(4).bounds().centerX();
-                    boundsY = items.parent().parent().child(2).child(i).child(4).bounds().centerY();
-                    click(boundsX,boundsY);
-                } else {
-                    console.log("浏览商品页");
-                    boundsX = items.parent().parent().child(2).child(i).child(4).bounds().centerX();
-                    boundsY = items.parent().parent().child(2).child(i).child(4).bounds().centerY();
-                    click(boundsX,boundsY);
-                }
+            //textEndsWith("4个商品领爆竹").waitFor();//当前页浏览加购4个商品领爆竹|当前页点击浏览4个商品领爆竹
+            for(var i = 0; i < 10; i++){
+                console.log(10 - i);
                 sleep(1000);
-                console.log("返回");
-                back();
-                sleep(1000);
-                for(var ii = 0; !textEndsWith("4个商品领爆竹").exists(); ii++){
-                    if(ii == 0){
-                        console.log("返回");
-                    }else {
-                        console.log("再次返回");
-                    }
-                    back();
-                    sleep(2000);
-                    if(ii > 4){
-                        console.error("任务异常，退出当前账号");
-                        home();
-                        return;
-                    }
-                }
-                if (i >= 3) {
+                if(textEndsWith("4个商品领爆竹").exists()){
                     break;
                 }
+                if(i >= 10){
+                    console.error("超时未识别到关键字");
+                    return;
+                }
             }
-            console.log("浏览商品任务完成");
+            if(textEndsWith("4个商品领爆竹").exists()){
+                for (let i = 0; i < 4; i++) {
+                    let items = textEndsWith("4个商品领爆竹").findOne();
+                    if (cart) {
+                        console.log("加购并浏览");
+                        boundsX = items.parent().parent().child(2).child(i).child(0).child(1).bounds().centerX();
+                        boundsY = items.parent().parent().child(2).child(i).child(0).child(1).bounds().centerY();
+                        click(boundsX,boundsY);
+                    } else {
+                        console.log("浏览商品页");
+                        boundsX = items.parent().parent().child(2).child(i).child(0).child(1).bounds().centerX();
+                        boundsY = items.parent().parent().child(2).child(i).child(0).child(1).bounds().centerY();
+                        click(boundsX,boundsY);
+                    }
+                    sleep(1000);
+                    console.log("返回");
+                    back();
+                    sleep(1000);
+                    for(var ii = 0; !textEndsWith("4个商品领爆竹").exists(); ii++){
+                        if(ii == 0){
+                            console.log("返回");
+                        }else {
+                            console.log("再次返回");
+                        }
+                        back();
+                        sleep(2000);
+                        if(ii > 4){
+                            console.error("任务异常，退出当前账号");
+                            home();
+                            return;
+                        }
+                    }
+                    if (i >= 3) {
+                        break;
+                    }
+                }
+                console.log("浏览商品任务完成");
+            }
+            else{
+                console.error("关键字异常，返回任务列表");
+            }
+
         }
 
         if (taskText.match(/浏览.*s|浏览.*秒/)) {
@@ -217,7 +252,7 @@ function Run(){
         back();
         sleep(1000);
         console.info("准备下一个任务");
-        sleep(1000);
+        sleep(1500);
     }
     console.log("小程序所有任务完成");
 }
