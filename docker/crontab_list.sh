@@ -42,8 +42,6 @@
 21 9 * * * node /scripts/jd_MMdou.js >> /scripts/logs/jd_MMdou.log 2>&1
 #5G超级盲盒
 0 0,1-23/3 * * * node /scripts/jd_mohe.js >> /scripts/logs/jd_mohe.log 2>&1
-#省钱大赢家之翻翻乐
-20 * * * * node /scripts/jd_big_winner.js >> /scripts/logs/jd_big_winner.log 2>&1
 #京东众筹许愿池 - 京东抽奖机
 22 0,8,12 * * * node /scripts/jd_wish.js >> /scripts/logs/jd_wish.log 2>&1
 #内容鉴赏官
