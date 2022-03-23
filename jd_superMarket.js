@@ -22,7 +22,7 @@ const $ = new Env('东东超市');
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '', jdSuperMarketShareArr = [], notify, newShareCodes;
 let helpAu = false;//给作者助力 免费拿,省钱大赢家等活动.默认true是,false不助力.
-helpAu = $.isNode() ? (process.env.HELP_AUTHOR ? process.env.HELP_AUTHOR === 'false' : helpAu) : false;
+helpAu = $.isNode() ? (process.env.HELP_AUTHOR ? process.env.HELP_AUTHOR === 'true' : helpAu) : helpAu;
 let jdNotify = true;//用来是否关闭弹窗通知，true表示关闭，false表示开启。
 let superMarketUpgrade = true;//自动升级,顺序:解锁升级商品、升级货架,true表示自动升级,false表示关闭自动升级
 let businessCircleJump = true;//小于对方300热力值自动更换商圈队伍,true表示运行,false表示禁止
@@ -78,7 +78,11 @@ let shareCodes = []
     })
 async function jdSuperMarket() {
   try {
+    if (helpAu === true) {
+      await helpAuthor();
+    }
     await smtgHome();
+    await $.wait(12000)
     // await receiveGoldCoin();//收金币
     // await businessCircleActivity();//商圈活动
     await receiveBlueCoin();//收蓝币（小费）
@@ -97,9 +101,7 @@ async function jdSuperMarket() {
     await smtgHome();
     await receiveUserUpgradeBlue();
     await Home();
-    if (helpAu === false) {
-      await helpAuthor();
-    }
+
   } catch (e) {
     $.logErr(e)
   }
@@ -360,7 +362,7 @@ async function businessCircleActivity() {
     if (joinStatus === 0) {
       if (joinPkTeam === 'true') {
         console.log(`\n注：PK会在每天的七点自动随机加入作者创建的队伍\n`)
-        await updatePkActivityIdCDN('https://cdn.jsdelivr.net/gh/gitupdate/updateTeam@master/shareCodes/jd_updateTeam.json');
+        await updatePkActivityIdCDN('https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/jd_updateTeam.json');
         console.log(`\nupdatePkActivityId[pkActivityId]:::${$.updatePkActivityIdRes && $.updatePkActivityIdRes.pkActivityId}`);
         console.log(`\n京东服务器返回的[pkActivityId] ${pkActivityId}`);
         if ($.updatePkActivityIdRes && ($.updatePkActivityIdRes.pkActivityId === pkActivityId)) {
@@ -887,7 +889,7 @@ function smtg_sellMerchandise(body) {
   })
 }
 //新版东东超市
-function updatePkActivityId(url = 'https://raw.githubusercontent.com/xxx/updateTeam/master/jd_updateTeam.json') {
+function updatePkActivityId(url = 'https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/jd_updateTeam.json') {
   return new Promise(resolve => {
     $.get({url}, async (err, resp, data) => {
       try {
@@ -1637,12 +1639,17 @@ function jsonParse(str) {
 }
 //==========================以下是给作者助力 免费拿,省钱大赢家等活动======================
 async function helpAuthor() {
-  await barGain();//免费拿
+  
   await bigWinner();//省钱大赢家
+  await barGain();//免费拿
 }
 async function barGain() {
-  let res =[
-  ]
+  let res = await getAuthorShareCode2('https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/jd_barGain.json')
+  if (!res) {
+    $.http.get({url: 'https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/jd_barGain.json'}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
+    await $.wait(1000)
+    res = await getAuthorShareCode2('https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/jd_barGain.json')
+  }
   $.inBargaining = [...(res && res['inBargaining'] || [])]
   $.inBargaining = getRandomArrayElements($.inBargaining, $.inBargaining.length > 3 ? 6 : $.inBargaining.length);
   for (let item of $.inBargaining) {
@@ -1668,13 +1675,13 @@ async function barGain() {
 }
 
 async function bigWinner() {
-  let res = [
-      {
-        "inviter": "",
-        "redEnvelopeId": ""
-      }
-  ]
-  $.codeList = getRandomArrayElements([...(res || [])], [...(res || [])].length);
+  let res = await getAuthorShareCode2('https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/bigWinner.json')
+  if (!res) {
+    $.http.get({url: 'https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/bigWinner.json'}).then((resp) => {}).catch((e) => $.log('刷新CDN异常', e));
+    await $.wait(1000)
+    res = await getAuthorShareCode2('https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/bigWinner.json')
+  }
+  $.codeList = [...(res || [])] ;
   for (let vo of $.codeList) {
     if (!vo['inviter']) continue
     await _618(vo['redEnvelopeId'], vo['inviter'], '1');

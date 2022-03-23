@@ -17,28 +17,28 @@ hostname = draw.jdfcloud.com
 
 ===========Surge=================
 [Script]
-宠汪汪邀请助力与赛跑助力 = type=cron,cronexp="15 10 * * *",wake-system=1,timeout=3600,script-path=jd_joy_run.js
-宠汪汪助力更新Token = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code=, requires-body=1, max-size=0, script-path=jd_joy_run.js
-宠汪汪助力获取Token = type=http-request,pattern=^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId=, max-size=0, script-path=jd_joy_run.js
+宠汪汪邀请助力与赛跑助力 = type=cron,cronexp="15 10 * * *",wake-system=1,timeout=3600,script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js
+宠汪汪助力更新Token = type=http-response,pattern=^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code=, requires-body=1, max-size=0, script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js
+宠汪汪助力获取Token = type=http-request,pattern=^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId=, max-size=0, script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js
 
 ===================Quantumult X=====================
 [task_local]
 # 宠汪汪邀请助力与赛跑助力
-15 10 * * * jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
+15 10 * * * https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力, img-url=https://raw.githubusercontent.com/58xinian/icon/master/jdcww.png, enabled=true
 [rewrite_local]
 # 宠汪汪助力更新Token
-^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code= url script-response-body jd_joy_run.js
+^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code= url script-response-body https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js
 # 宠汪汪助力获取Token
-^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= url script-request-header jd_joy_run.js
+^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= url script-request-header https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js
 
 =====================Loon=====================
 [Script]
-cron "15 10 * * *" script-path=jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力
-http-response ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code= script-path=jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力更新Token
-http-request ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= script-path=jd_joy_run.js, timeout=3600, tag=宠汪汪助力获取Token
+cron "15 10 * * *" script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js, tag=宠汪汪邀请助力与赛跑助力
+http-response ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/addUser\?code= script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js, requires-body=true, timeout=10, tag=宠汪汪助力更新Token
+http-request ^https:\/\/draw\.jdfcloud\.com(\/mirror)?\/\/api\/user\/user\/detail\?openId= script-path=https://raw.githubusercontent.com/Aaron-lv/sync/jd_scripts/jd_joy_run.js, timeout=3600, tag=宠汪汪助力获取Token
 */
 const $ = new Env('宠汪汪赛跑');
-const zooFaker = require('./utils/JDJRValidator_Pure');
+const zooFaker = require('./JDJRValidator_Pure');
 $.get = zooFaker.injectToRequest2($.get.bind($));
 $.post = zooFaker.injectToRequest2($.post.bind($));
 //宠汪汪赛跑所需token，默认读取作者服务器的
@@ -49,13 +49,14 @@ const isRequest = typeof $request != "undefined"
 const JD_BASE_API = `https://draw.jdfcloud.com//pet`;
 //Node.js用户请在jdCookie.js处填写京东ck;
 const jdCookieNode = $.isNode() ? require('./jdCookie.js') : {};
-///下面给出好友邀请助力的示例填写规则
-let invite_pins = ["18237091240_p,pluto.5218_m,jd_50f2be46743fc,15082992273_p,jd_680c996309fbf,jd_5cd15c4b0807c,jd_TTcYfwuzDbnh,c15639985031,jd_544cacc7b14ef,313333079-954679,游林yl,doudou123454321,920519087_m,daozisi10996,18374991542_p,18368343571_p,13168885005_p,jd_7bfaae44697b8,805214833_m,a97500696,13681618779_p,jd_5ff0149a704ed,1839512989_m,jd_nTMLFAhCniPv,jd_6d1f53ef83341,wdmEyBQUqAKWZM,jd_48a94eeaeb8aa,lidonglei1,jd_5e0360af58af5,jd_5d893d2dcd170,jd_IscTBsCvIYKz,jd_uiXUlnyrhZhs,jd_722611448b46e,jd_7c963de1a4a00,jd_6874e804fc32f,邵帅19920110,芬芳的空气,jd_ikuMIXoFLcXF,jd_taOSHquozbiv,jiazhou84,jd_JGDpGEbPZqkq,zhu_hua82,jd_73f207dc7c342,1005081460xb,jd_7ec1861ff2491,呵呵6990,jd_49a89d7983021,jd_4689344dcacbd,jd_76aa0bbb2511f,蓝色的少年,蓝坊文化,董小萌Mario,jd_DhLpMtDOUJqG,jd_IkIiGmrNndWo,丶灬陌然,18237091240_p,jd_IkIiGmrNndWo,wdmEyBQUqAKWZM,a97500696,pluto.5218_m,jd_IscTBsCvIYKz,jd_680c996309fbf,zhu_hua82,丶灬陌然,jd_6d1f53ef83341,jd_7ec1861ff2491,jd_48a94eeaeb8aa,c15639985031,jd_7c963de1a4a00,jd_6874e804fc32f,jd_76aa0bbb2511f,daozisi10996,jd_DhLpMtDOUJqG,jd_4689344dcacbd,jd_5e0360af58af5,jd_722611448b46e,jd_5cd15c4b0807c,董小萌Mario,jd_uiXUlnyrhZhs,jd_ikuMIXoFLcXF,18237091240_p,呵呵6990,jd_TTcYfwuzDbnh,lidonglei1,13681618779_p,jd_73f207dc7c342,jd_7bfaae44697b8,1005081460xb,jd_50f2be46743fc,18368343571_p,15082992273_p,jd_5ff0149a704ed,邵帅19920110,13168885005_p,18374991542_p,jd_5d893d2dcd170,jd_544cacc7b14ef,jd_49a89d7983021,蓝坊文化,蓝色的少年,游林yl,jiazhou84,920519087_m,芬芳的空气,jd_taOSHquozbiv,jd_nTMLFAhCniPv,313333079-954679,805214833_m,doudou123454321,jd_JGDpGEbPZqkq,1839512989_m,jd_6f5e8ee8f9429,18018982871_p,jd_YWuWKnYitefP,亮亮068,jd_CZZCpsNCDDoY,jd_7339f188c50ac,jd_4e67dd543c342,sclspc,jd_6fb63d0a4f599,jd_ObHjbnRenQhF,jd_AHLAKpHUNqWH,18780717220_p,小小雷神,kelanlee,52612974-336953,jd_44f6a599c67d9,jd_46d498f5c2cf9,咦噜哈噜咦"];
+//下面给出好友邀请助力的示例填写规则
+let invite_pins =["wdwMJcEGPKgMlq","niujie678","hajiuhajiu2733","wdovJvWPLhUUqC","jd_4a2a4cee61c9e","q2705322732","jd_586f24d2da48d","wdfxtlDMXHbaHu","wdaABrvfJIjgOl","hajiuhajiu2067","18939824134_p","jd_586f24d2da48d","jd_441027f2a1e0d","jd_747fca41dbd0a","niujie4969","wdBJFgWzHaTGou","jd_gOtBAmRJxrDT","jd_45f1857040ac8","13335032760_p","jd_51d9ee19241e2","wdwMJcEGPKgMlq","Cindyui","ravenliangw","jd_5a069959eb8b9","nicolej18","碧落涛声","jd_RNSPYuSOvgWv","zhiguang217"
+];
 //下面给出好友赛跑助力的示例填写规则
-let run_pins = ["18237091240_p,pluto.5218_m,jd_50f2be46743fc,15082992273_p,jd_680c996309fbf,jd_5cd15c4b0807c,jd_TTcYfwuzDbnh,c15639985031,jd_544cacc7b14ef,313333079-954679,游林yl,doudou123454321,920519087_m,daozisi10996,18374991542_p,18368343571_p,13168885005_p,jd_7bfaae44697b8,805214833_m,a97500696,13681618779_p,jd_5ff0149a704ed,1839512989_m,jd_nTMLFAhCniPv,jd_6d1f53ef83341,wdmEyBQUqAKWZM,jd_48a94eeaeb8aa,lidonglei1,jd_5e0360af58af5,jd_5d893d2dcd170,jd_IscTBsCvIYKz,jd_uiXUlnyrhZhs,jd_722611448b46e,jd_7c963de1a4a00,jd_6874e804fc32f,邵帅19920110,芬芳的空气,jd_ikuMIXoFLcXF,jd_taOSHquozbiv,jiazhou84,jd_JGDpGEbPZqkq,zhu_hua82,jd_73f207dc7c342,1005081460xb,jd_7ec1861ff2491,呵呵6990,jd_49a89d7983021,jd_4689344dcacbd,jd_76aa0bbb2511f,蓝色的少年,蓝坊文化,董小萌Mario,jd_DhLpMtDOUJqG,jd_IkIiGmrNndWo,丶灬陌然,18237091240_p,jd_IkIiGmrNndWo,wdmEyBQUqAKWZM,a97500696,pluto.5218_m,jd_IscTBsCvIYKz,jd_680c996309fbf,zhu_hua82,丶灬陌然,jd_6d1f53ef83341,jd_7ec1861ff2491,jd_48a94eeaeb8aa,c15639985031,jd_7c963de1a4a00,jd_6874e804fc32f,jd_76aa0bbb2511f,daozisi10996,jd_DhLpMtDOUJqG,jd_4689344dcacbd,jd_5e0360af58af5,jd_722611448b46e,jd_5cd15c4b0807c,董小萌Mario,jd_uiXUlnyrhZhs,jd_ikuMIXoFLcXF,18237091240_p,呵呵6990,jd_TTcYfwuzDbnh,lidonglei1,13681618779_p,jd_73f207dc7c342,jd_7bfaae44697b8,1005081460xb,jd_50f2be46743fc,18368343571_p,15082992273_p,jd_5ff0149a704ed,邵帅19920110,13168885005_p,18374991542_p,jd_5d893d2dcd170,jd_544cacc7b14ef,jd_49a89d7983021,蓝坊文化,蓝色的少年,游林yl,jiazhou84,920519087_m,芬芳的空气,jd_taOSHquozbiv,jd_nTMLFAhCniPv,313333079-954679,805214833_m,doudou123454321,jd_JGDpGEbPZqkq,1839512989_m,jd_6f5e8ee8f9429,18018982871_p,jd_YWuWKnYitefP,亮亮068,jd_CZZCpsNCDDoY,jd_7339f188c50ac,jd_4e67dd543c342,sclspc,jd_6fb63d0a4f599,jd_ObHjbnRenQhF,jd_AHLAKpHUNqWH,18780717220_p,小小雷神,kelanlee,52612974-336953,jd_44f6a599c67d9,jd_46d498f5c2cf9,咦噜哈噜咦"];
+let run_pins = ['wdwMJcEGPKgMlq,niujie678,hajiuhajiu2733,wdovJvWPLhUUqC,jd_4a2a4cee61c9e,jd_586f24d2da48d,wdfxtlDMXHbaHu'];
 //friendsArr内置太多会导致IOS端部分软件重启,可PR过来(此处目的:帮别人助力可得30g狗粮)
-let friendsArr = ["18237091240_p,pluto.5218_m,jd_50f2be46743fc,15082992273_p,jd_680c996309fbf,jd_5cd15c4b0807c,jd_TTcYfwuzDbnh,c15639985031,jd_544cacc7b14ef,313333079-954679,游林yl,doudou123454321,920519087_m,daozisi10996,18374991542_p,18368343571_p,13168885005_p,jd_7bfaae44697b8,805214833_m,a97500696,13681618779_p,jd_5ff0149a704ed,1839512989_m,jd_nTMLFAhCniPv,jd_6d1f53ef83341,wdmEyBQUqAKWZM,jd_48a94eeaeb8aa,lidonglei1,jd_5e0360af58af5,jd_5d893d2dcd170,jd_IscTBsCvIYKz,jd_uiXUlnyrhZhs,jd_722611448b46e,jd_7c963de1a4a00,jd_6874e804fc32f,邵帅19920110,芬芳的空气,jd_ikuMIXoFLcXF,jd_taOSHquozbiv,jiazhou84,jd_JGDpGEbPZqkq,zhu_hua82,jd_73f207dc7c342,1005081460xb,jd_7ec1861ff2491,呵呵6990,jd_49a89d7983021,jd_4689344dcacbd,jd_76aa0bbb2511f,蓝色的少年,蓝坊文化,董小萌Mario,jd_DhLpMtDOUJqG,jd_IkIiGmrNndWo,丶灬陌然,18237091240_p,jd_IkIiGmrNndWo,wdmEyBQUqAKWZM,a97500696,pluto.5218_m,jd_IscTBsCvIYKz,jd_680c996309fbf,zhu_hua82,丶灬陌然,jd_6d1f53ef83341,jd_7ec1861ff2491,jd_48a94eeaeb8aa,c15639985031,jd_7c963de1a4a00,jd_6874e804fc32f,jd_76aa0bbb2511f,daozisi10996,jd_DhLpMtDOUJqG,jd_4689344dcacbd,jd_5e0360af58af5,jd_722611448b46e,jd_5cd15c4b0807c,董小萌Mario,jd_uiXUlnyrhZhs,jd_ikuMIXoFLcXF,18237091240_p,呵呵6990,jd_TTcYfwuzDbnh,lidonglei1,13681618779_p,jd_73f207dc7c342,jd_7bfaae44697b8,1005081460xb,jd_50f2be46743fc,18368343571_p,15082992273_p,jd_5ff0149a704ed,邵帅19920110,13168885005_p,18374991542_p,jd_5d893d2dcd170,jd_544cacc7b14ef,jd_49a89d7983021,蓝坊文化,蓝色的少年,游林yl,jiazhou84,920519087_m,芬芳的空气,jd_taOSHquozbiv,jd_nTMLFAhCniPv,313333079-954679,805214833_m,doudou123454321,jd_JGDpGEbPZqkq,1839512989_m,jd_6f5e8ee8f9429,18018982871_p,jd_YWuWKnYitefP,亮亮068,jd_CZZCpsNCDDoY,jd_7339f188c50ac,jd_4e67dd543c342,sclspc,jd_6fb63d0a4f599,jd_ObHjbnRenQhF,jd_AHLAKpHUNqWH,18780717220_p,小小雷神,kelanlee,52612974-336953,jd_44f6a599c67d9,jd_46d498f5c2cf9,咦噜哈噜咦"];
-
+let friendsArr = ["wdwMJcEGPKgMlq","niujie678","hajiuhajiu2733","wdovJvWPLhUUqC","jd_4a2a4cee61c9e","q2705322732","jd_586f24d2da48d","wdfxtlDMXHbaHu","wdaABrvfJIjgOl","hajiuhajiu2067","18939824134_p","jd_586f24d2da48d","jd_441027f2a1e0d","jd_747fca41dbd0a","niujie4969","wdBJFgWzHaTGou","jd_gOtBAmRJxrDT","jd_45f1857040ac8","13335032760_p","jd_51d9ee19241e2","wdwMJcEGPKgMlq","Cindyui","ravenliangw","jd_5a069959eb8b9","nicolej18","碧落涛声","jd_RNSPYuSOvgWv","zhiguang217"
+];
 
 //IOS等用户直接用NobyDa的jd cookie
 let cookiesArr = [], cookie = '';
@@ -125,7 +126,7 @@ async function main() {
     $.msg($.name, '【提示】请先获取来客有礼宠汪汪token', "iOS用户微信搜索'来客有礼'小程序\n点击底部的'发现'Tab\n即可获取Token");
     // return;
   }
-  //await getFriendPins();
+  await getFriendPins();
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       $.validate = '';
@@ -144,8 +145,8 @@ async function main() {
           run_pins = run_pins[0].split(',')
           Object.values(jdCookieNode).filter(item => item.match(/pt_pin=([^; ]+)(?=;?)/)).map(item => run_pins.push(decodeURIComponent(item.match(/pt_pin=([^; ]+)(?=;?)/)[1])))
           run_pins = [...new Set(run_pins)];
-          let fixPins = run_pins.splice(run_pins.indexOf('18237091240_p'), 1);
-          fixPins.push(...run_pins.splice(run_pins.indexOf('pluto.5218_m'), 1));
+          let fixPins = run_pins.splice(run_pins.indexOf('zhaosen2580'), 1);
+          // fixPins.push(...run_pins.splice(run_pins.indexOf('jd_61f1269fd3236'), 1));
           const randomPins = getRandomArrayElements(run_pins, run_pins.length);
           run_pins = [[...fixPins, ...randomPins].join(',')];
           invite_pins = run_pins;
@@ -257,7 +258,7 @@ async function getToken() {
 function readToken() {
   return new Promise(resolve => {
     $.get({
-      url: `https://cdn.nz.lu/gettoken`,
+      url: `https://cdn.nz.lu/gettoken`,    //ppppppppppppppppp token地址， 可以自己抓取放在环境变量
       headers: {
         'Host': 'jdsign.cf',
         'User-Agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88'
@@ -541,7 +542,7 @@ function getRandomArrayElements(arr, count) {
 function getFriendPins() {
   return new Promise(resolve => {
     $.get({
-      url: "",
+      url: "https://xr2021.coding.net/p/import-kasd/d/JDbot/git/raw/master/shareCodes/friendPins.json",
       headers:{
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       },
